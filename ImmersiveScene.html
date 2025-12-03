@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat System Core - Cinematic Scene</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: '#00f3ff', // Cyan
+                        core: '#0f172a',  // Dark Blue
+                        alert: '#ff003c', // Red
+                        matrix: '#0aff00', // Green
+                    },
+                    fontFamily: {
+                        header: ['"Orbitron"', 'sans-serif'],
+                        body: ['"Rajdhani"', 'sans-serif'],
+                        code: ['"Share Tech Mono"', 'monospace'],
+                    },
+                    boxShadow: {
+                        'holo': '0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 20px rgba(0, 243, 255, 0.1)',
+                        'glow-text': '0 0 5px rgba(0, 243, 255, 0.8)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        /* 电影银幕容器 2.35:1 */
+        #scene-stage {
+            width: 1400px;
+            height: 600px;
+            position: relative;
+            background: radial-gradient(circle at center bottom, #1e293b 0%, #020617 80%);
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.1);
+            perspective: 1000px; /* 3D 透视 */
+        }
+
+        /* 环境层：3D网格地板 */
+        .floor-grid {
+            position: absolute;
+            bottom: -300px;
+            left: -50%;
+            width: 200%;
+            height: 600px;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.2) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(75deg);
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 60%);
+            z-index: 1;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 50px; }
+        }
+
+        /* 电影特效层：扫描线与暗角 */
+        .overlay-fx {
+            position: absolute;
+            inset: 0;
+            z-index: 50;
+            pointer-events: none;
+            background: 
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            box-shadow: inset 0 0 150px rgba(0,0,0,0.9);
+        }
+
+        /* 全息面板基础样式 */
+        .holo-panel {
+            position: absolute;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            padding: 20px;
+            z-index: 10;
+            clip-path: polygon(
+                0 0, 
+                100% 0, 
+                100% calc(100% - 20px), 
+                calc(100% - 20px) 100%, 
+                0 100%
+            ); /* 科技感切角 */
+        }
+
+        /* 装饰性连接线 */
+        .data-line {
+            position: absolute;
+            height: 1px;
+            background: rgba(0, 243, 255, 0.5);
+            z-index: 5;
+            transform-origin: left center;
+        }
+
+        /* 呼吸灯动画 */
+        .pulse { animation: pulse-glow 2s infinite alternate; }
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 5px rgba(0, 243, 255, 0.2); }
+            to { box-shadow: 0 0 15px rgba(0, 243, 255, 0.6); }
+        }
+
+        /* 文字发光 */
+        .text-glow { text-shadow: 0 0 5px rgba(0, 243, 255, 0.7); }
+        
+        /* 浮动动画 */
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .float-anim-delay { animation: float 7s ease-in-out infinite reverse; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scene-stage">
+        <div class="floor-grid"></div>
+        <div class="overlay-fx"></div>
+
+        <div class="absolute top-0 left-0 w-full h-12 flex justify-between items-center px-8 z-40 border-b border-cyber/20 bg-black/40 backdrop-blur">
+            <div class="flex items-center gap-4">
+                <div class="text-cyber font-header font-bold text-xl tracking-widest text-glow">CODECOMBAT<span class="text-xs ml-2 opacity-70">SYSTEM_ARCH_V4.0</span></div>
+            </div>
+            <div class="flex gap-8 font-code text-xs text-cyber/60">
+                <span>CPU: 98%</span>
+                <span>MEM: 64TB</span>
+                <span>LATENCY: 12ms</span>
+            </div>
+        </div>
+
+        <div class="holo-panel float-anim" style="top: 15%; left: 5%; width: 280px;">
+            <div class="flex items-center justify-between mb-2 border-b border-cyber/20 pb-1">
+                <h3 class="text-cyber font-header text-sm uppercase">01 // Secure Sandbox</h3>
+                <i class="fa-brands fa-docker text-xl text-cyber opacity-80"></i>
+            </div>
+            <div class="relative h-32 mb-2 bg-black/30 border border-cyber/10 p-2 overflow-hidden">
+                <div class="font-code text-[10px] text-green-400 opacity-80 leading-tight">
+                    > init_container(uid=4492)<br>
+                    > isolation_level: MAX<br>
+                    > resource_alloc: DYNAMIC<br>
+                    > status: <span class="animate-pulse">RUNNING</span><br>
+                    > exec_time: 4ms
+                </div>
+                <div class="absolute bottom-0 left-0 h-1 bg-cyber w-2/3 animate-pulse"></div>
+            </div>
+            <h4 class="font-bold text-white mb-1">实时代码执行</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                基于 Docker 集群的毫秒级隔离环境。智能资源调度算法解决海量并发挑战，平衡安全与效率。
+            </p>
+        </div>
+
+        <div class="data-line" style="top: 30%; left: 25%; width: 200px; transform: rotate(15deg);"></div>
+
+
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-center w-[400px]">
+            <div class="relative w-40 h-40 mx-auto mb-6">
+                <div class="absolute inset-0 rounded-full border-2 border-cyber/30 animate-[spin_10s_linear_infinite]"></div>
+                <div class="absolute inset-4 rounded-full border border-cyber/50 border-dashed animate-[spin_15s_linear_infinite_reverse]"></div>
+                <div class="absolute inset-0 rounded-full bg-cyber/10 blur-xl pulse"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fa-solid fa-brain text-5xl text-white drop-shadow-[0_0_10px_rgba(0,243,255,0.8)]"></i>
+                </div>
+            </div>
+            
+            <div class="holo-panel inline-block text-left relative">
+                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-black border border-cyber px-2 text-[10px] text-cyber uppercase">AI Engine Core</div>
+                <h3 class="text-xl font-header font-bold text-white text-center text-glow mb-2">个性化学习路径</h3>
+                <div class="grid grid-cols-2 gap-4 text-xs">
+                    <div>
+                        <div class="text-cyber/70 font-code uppercase">Input Stream</div>
+                        <div class="text-slate-400">轨迹分析、错误类型</div>
+                    </div>
+                    <div>
+                        <div class="text-cyber/70 font-code uppercase">Algorithm</div>
+                        <div class="text-slate-400">多臂老虎机 (MAB)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="holo-panel float-anim-delay" style="top: 15%; right: 5%; width: 300px;">
+            <div class="flex items-center justify-between mb-2 border-b border-cyber/20 pb-1">
+                <h3 class="text-cyber font-header text-sm uppercase">03 // Semantic Layer</h3>
+                <i class="fa-solid fa-language text-xl text-cyber opacity-80"></i>
+            </div>
+            
+            <div class="flex gap-1 mb-3 font-code text-[10px]">
+                <div class="w-1/2 bg-black/50 p-2 border-l-2 border-yellow-500">
+                    <div class="text-gray-500"># USER CODE</div>
+                    <div class="text-white">hero.moveRight()</div>
+                    <div class="text-white">hero.attack()</div>
+                </div>
+                <div class="flex items-center text-cyber"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="w-1/2 bg-black/50 p-2 border-l-2 border-green-500">
+                    <div class="text-gray-500"># ENGINE EVENT</div>
+                    <div class="text-matrix">ACTION: POS_X+1</div>
+                    <div class="text-matrix">STATE: ATK_ANIM</div>
+                </div>
+            </div>
+            
+            <p class="text-xs text-slate-400 leading-relaxed">
+                核心专利技术：将抽象代码实时映射为复杂游戏动作的“游戏语义层”API。
+            </p>
+        </div>
+        
+        <div class="data-line" style="top: 30%; right: 26%; width: 180px; transform: rotate(-15deg);"></div>
+
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-end gap-4 w-full px-12 justify-center">
+            
+            <div class="relative w-32 h-32 bg-black/40 rounded-full border border-cyber/30 flex items-center justify-center overflow-hidden">
+                <div class="absolute w-1/2 h-1/2 top-0 right-0 bg-gradient-to-t from-transparent to-cyber/40 origin-bottom-left animate-[spin_4s_linear_infinite]" style="border-left: 1px solid rgba(0,243,255,0.8);"></div>
+                <div class="absolute inset-4 rounded-full border border-cyber/10"></div>
+                <div class="absolute inset-8 rounded-full border border-cyber/10"></div>
+                <i class="fa-solid fa-crosshairs text-cyber opacity-50 relative z-10"></i>
+            </div>
+            
+            <div class="holo-panel mb-4 w-64">
+                <h3 class="text-cyber font-header text-sm uppercase mb-1">04 // Skill Assessment</h3>
+                <div class="flex justify-between items-end mb-1">
+                    <span class="text-white text-xs font-bold">算法思维</span>
+                    <div class="h-1 w-20 bg-gray-700"><div class="h-full bg-cyber w-[85%]"></div></div>
+                </div>
+                <div class="flex justify-between items-end">
+                    <span class="text-white text-xs font-bold">系统设计</span>
+                    <div class="h-1 w-20 bg-gray-700"><div class="h-full bg-cyber w-[60%]"></div></div>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-2">
+                    超越语法检查，基于静态分析与动态测试的综合能力雷达。
+                </p>
+            </div>
+
+        </div>
+
+        <div class="absolute bottom-4 right-8 font-header text-2xl text-white/10 uppercase tracking-[0.5em] pointer-events-none">
+            Future of EdTech
+        </div>
+
+    </div>
+
+</body>
+</html>

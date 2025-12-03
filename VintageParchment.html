@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The CodeCombat Chronicles - Archive Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+SC:wght@400;700&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#f5e9d4',
+                        ink: '#3d2b1f', // Deep Brown Ink
+                        accent: '#4285F4', // The requested Blue
+                        rust: '#8b4513', // Saddle Brown
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif SC"', 'serif'],
+                        display: ['"Cinzel"', 'serif'],
+                        italic: ['"Playfair Display"', 'serif'],
+                    },
+                    backgroundImage: {
+                        'paper-texture': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.15%22/%3E%3C/svg%3E')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #2c1e14; /* Dark wood desk color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 纸张主体 */
+        #parchment {
+            width: 1000px;
+            height: 750px;
+            background-color: #f5e9d4;
+            position: relative;
+            box-shadow: 
+                0 1px 1px rgba(0,0,0,0.15), 
+                0 10px 0 -5px #eee, 
+                0 10px 1px -4px rgba(0,0,0,0.15), 
+                0 20px 0 -10px #eee, 
+                0 20px 1px -9px rgba(0,0,0,0.15),
+                5px 5px 15px rgba(0,0,0,0.5); /* Layered paper effect */
+            overflow: hidden;
+            transform: rotate(-1deg); /* Slight natural rotation */
+        }
+
+        /* 纸张纹理叠加 */
+        .texture-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.1%22/%3E%3C/svg%3E');
+            mix-blend-mode: multiply;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 边缘暗角（做旧效果） */
+        .vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, transparent 60%, rgba(139, 69, 19, 0.2) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* 内边框 */
+        .inner-border {
+            position: absolute;
+            inset: 20px;
+            border: 2px solid #3d2b1f;
+            z-index: 3;
+        }
+        
+        .inner-border::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid #3d2b1f;
+        }
+
+        /* 角落装饰 */
+        .corner-deco {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-style: double;
+            border-color: #3d2b1f;
+            z-index: 4;
+        }
+        .top-left { top: 15px; left: 15px; border-width: 4px 0 0 4px; }
+        .top-right { top: 15px; right: 15px; border-width: 4px 4px 0 0; }
+        .bottom-left { bottom: 15px; left: 15px; border-width: 0 0 4px 4px; }
+        .bottom-right { bottom: 15px; right: 15px; border-width: 0 4px 4px 0; }
+
+        /* 内容区域 */
+        .content-area {
+            position: relative;
+            z-index: 5;
+            padding: 60px 80px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 印刷墨迹效果 */
+        .ink-text {
+            color: #3d2b1f;
+            /* 模拟墨水渗入纸张 */
+            mix-blend-mode: multiply; 
+        }
+
+        /* 首字下沉 */
+        .drop-cap::first-letter {
+            float: left;
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            line-height: 0.8;
+            padding-right: 8px;
+            padding-top: 4px;
+            color: #4285F4; /* Theme color used as "Blue Ink" */
+            filter: sepia(0.4) contrast(1.2); /* Make it look vintage */
+            font-weight: 700;
+        }
+
+        /* 火漆印章 */
+        .wax-seal {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #5e8ec9, #4285F4, #2a5bb5);
+            border-radius: 50%;
+            box-shadow: 2px 4px 6px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 3rem;
+            transform: rotate(15deg);
+            border: 2px dashed rgba(255,255,255,0.3);
+            filter: sepia(0.3);
+            opacity: 0.9;
+        }
+        
+        /* 磨损的分割线 */
+        .worn-divider {
+            height: 1px;
+            background: #3d2b1f;
+            opacity: 0.4;
+            margin: 20px 0;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="parchment">
+        <div class="texture-overlay"></div>
+        <div class="vignette"></div>
+        
+        <div class="inner-border"></div>
+        <div class="corner-deco top-left"></div>
+        <div class="corner-deco top-right"></div>
+        <div class="corner-deco bottom-left"></div>
+        <div class="corner-deco bottom-right"></div>
+
+        <div class="content-area">
+            
+            <header class="text-center mb-8">
+                <div class="font-display text-xs tracking-[0.5em] text-rust mb-2 uppercase">Est. MMXIII · The Developer's Guild</div>
+                <h1 class="font-display text-5xl font-bold ink-text tracking-wide border-b-2 border-double border-[#3d2b1f] pb-4 inline-block">
+                    The CodeCombat Chronicles
+                </h1>
+                <div class="font-italic text-lg text-accent mt-2 opacity-80" style="filter: sepia(0.5);">
+                    "A Gateway to the Art of Programming"
+                </div>
+            </header>
+
+            <section class="mb-8">
+                <p class="font-serif text-lg leading-relaxed text-justify ink-text drop-cap indent-8">
+                    告别那些枯燥乏味的经卷教程吧。此地并非寻常的通关谜题，而是一座将 Python 与 JavaScript 等工业级语言铸造成你手中利剑的编程沙盒。在这场冒险中，代码即是咒语，逻辑即是力量。
+                </p>
+            </section>
+
+            <div class="worn-divider"></div>
+
+            <div class="grid grid-cols-2 gap-x-12 gap-y-8 flex-grow">
+                
+                <div class="relative">
+                    <h3 class="font-display font-bold text-xl ink-text mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-dungeon text-rust text-sm"></i>
+                        情境化研习
+                    </h3>
+                    <p class="font-serif text-sm leading-relaxed text-justify opacity-90">
+                        置身于“地牢逃生”与“部落战争”的宏大叙事中。你书写的每一行代码，皆即时化作视觉化的交互。学习之循环，已从旧式的“理论背诵”，升华为“需求-编码-验证”的实战演练。
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <h3 class="font-display font-bold text-xl ink-text mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-scroll text-rust text-sm"></i>
+                        务实之技艺
+                    </h3>
+                    <p class="font-serif text-sm leading-relaxed text-justify opacity-90">
+                        吾等之课程，直指当世求职之所需。非仅传授语法之皮毛，更在于授人以渔——如何以代码为斧，解决实际难题，构建宏伟项目。
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <h3 class="font-display font-bold text-xl ink-text mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-hourglass-half text-rust text-sm"></i>
+                        致成熟学者
+                    </h3>
+                    <p class="font-serif text-sm leading-relaxed text-justify opacity-90">
+                        吾等深知光阴之贵。故内容紧凑，摒弃稚童之语，直击核心概念。社区之内，皆为关于技术债务、框架抉择等真实工坊话题之深谈。
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <h3 class="font-display font-bold text-xl ink-text mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-robot text-rust text-sm"></i>
+                        机械贤者 (AI)
+                    </h3>
+                    <p class="font-serif text-sm leading-relaxed text-justify opacity-90">
+                        内置之机巧助手，能通晓汝之逻辑。非仅指陈错漏，更以资深匠人之视角发问，引导汝于迷雾中独自寻得最优之解。
+                    </p>
+                </div>
+
+            </div>
+
+            <footer class="mt-auto pt-6 text-center relative">
+                <p class="font-italic text-xl font-bold text-rust">
+                    "这不是游戏，这是一场以代码为武器的冒险。"
+                </p>
+                <p class="font-display text-xs tracking-widest mt-2 uppercase text-ink opacity-60">
+                    — Your Legacy Begins Today —
+                </p>
+
+                <div class="absolute right-0 bottom-0 font-italic text-2xl text-ink transform -rotate-12 opacity-80" style="font-family: 'Playfair Display', cursive;">
+                    Approved.
+                </div>
+            </footer>
+
+        </div>
+
+        <div class="wax-seal">
+            <i class="fa-solid fa-code"></i>
+        </div>
+
+    </div>
+
+</body>
+</html>

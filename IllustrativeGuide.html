@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat Adventure Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: '#e0f2fe',
+                        ground: '#a3e635',
+                        mtn: {
+                            light: '#94a3b8',
+                            dark: '#475569',
+                        },
+                        ui: {
+                            bg: '#ffffff',
+                            text: '#1e293b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Nunito"', 'sans-serif'],
+                        fun: ['"ZCOOL KuaiLe"', 'cursive'],
+                    },
+                    boxShadow: {
+                        'game': '0 4px 0 #cbd5e1, 0 10px 10px rgba(0,0,0,0.1)',
+                        'game-hover': '0 2px 0 #cbd5e1, 0 5px 5px rgba(0,0,0,0.1)',
+                        'pop': '0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        #map-container {
+            width: 1000px;
+            height: 1000px;
+            background: linear-gradient(to bottom, #bae6fd 0%, #f0f9ff 100%);
+            position: relative;
+            overflow: hidden;
+            border-radius: 40px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            font-family: 'Nunito', sans-serif;
+        }
+
+        /* 浮动云朵动画 */
+        .cloud {
+            animation: float-cloud 20s linear infinite;
+        }
+        @keyframes float-cloud {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(0px); }
+        }
+
+        /* 交互标记点 */
+        .marker {
+            position: absolute;
+            cursor: pointer;
+            z-index: 20;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .marker:hover {
+            transform: scale(1.1) translateY(-10px);
+            z-index: 50;
+        }
+
+        /* 标签样式 (默认显示) */
+        .marker-label {
+            background: white;
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 900;
+            color: #334155;
+            box-shadow: 0 4px 0 #94a3b8, 0 8px 10px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid #fff;
+        }
+
+        /* 弹窗详情 (Hover显示) */
+        .marker-popup {
+            position: absolute;
+            bottom: 140%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            width: 280px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            text-align: left;
+            border: 3px solid #f1f5f9;
+        }
+
+        /* 弹窗小三角 */
+        .marker-popup::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            margin-left: -10px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+        }
+
+        .marker:hover .marker-popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* 不同的标记颜色 */
+        .marker.stage-1 .marker-label { color: #15803d; border-color: #dcfce7; }
+        .marker.stage-2 .marker-label { color: #0369a1; border-color: #e0f2fe; }
+        .marker.stage-3 .marker-label { color: #7e22ce; border-color: #f3e8ff; }
+        .marker.stage-4 .marker-label { color: #b45309; border-color: #fef3c7; }
+
+        .icon-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="map-container">
+        
+        <svg viewBox="0 0 1000 1000" class="absolute inset-0 w-full h-full pointer-events-none">
+            <defs>
+                <linearGradient id="grad-mountain" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#cbd5e1;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#475569;stop-opacity:1" />
+                </linearGradient>
+                <filter id="shadow">
+                    <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity="0.1"/>
+                </filter>
+            </defs>
+
+            <path d="M-100,1000 L300,400 L700,1000 Z" fill="#e2e8f0" />
+            <path d="M400,1000 L800,300 L1200,1000 Z" fill="#cbd5e1" />
+
+            <path d="M100,1000 L500,200 L900,1000 Z" fill="url(#grad-mountain)" filter="url(#shadow)" />
+            
+            <path d="M420,360 L500,200 L580,360 L540,400 L500,350 L460,400 Z" fill="white" />
+
+            <path d="M500,900 C300,850 200,750 300,650 C400,550 700,550 700,450 C700,350 550,300 500,250" 
+                  fill="none" stroke="#fbbf24" stroke-width="12" stroke-dasharray="20,15" stroke-linecap="round" />
+
+            <g class="cloud" opacity="0.8">
+                <circle cx="200" cy="200" r="40" fill="white" />
+                <circle cx="250" cy="200" r="50" fill="white" />
+                <circle cx="300" cy="220" r="30" fill="white" />
+            </g>
+            <g class="cloud" opacity="0.6" transform="translate(600, 100)">
+                <circle cx="100" cy="100" r="30" fill="white" />
+                <circle cx="140" cy="110" r="40" fill="white" />
+            </g>
+
+            <g transform="translate(250, 850)">
+                <path d="M0,0 L20,-60 L40,0 Z" fill="#166534" />
+                <path d="M-20,20 L20,-40 L60,20 Z" fill="#15803d" />
+            </g>
+            <g transform="translate(750, 600)">
+                <path d="M0,0 L15,-50 L30,0 Z" fill="#166534" />
+                <path d="M-15,15 L15,-35 L45,15 Z" fill="#15803d" />
+            </g>
+        </svg>
+
+        <div class="absolute top-10 left-10 z-10">
+            <h1 class="font-fun text-5xl text-[#0f172a] drop-shadow-sm mb-2">CodeCombat</h1>
+            <div class="bg-[#facc15] text-[#0f172a] px-4 py-1 rounded-lg font-bold inline-block transform -rotate-2 shadow-game">
+                进阶蓝图 (Roadmap)
+            </div>
+        </div>
+
+        <div class="marker stage-1" style="bottom: 120px; left: 450px;">
+            <div class="marker-label">
+                <div class="icon-circle bg-green-600"><i class="fa-solid fa-seedling"></i></div>
+                <span>第一阶段：语法学徒</span>
+            </div>
+            <div class="marker-popup">
+                <h3 class="font-bold text-lg text-green-700 mb-2">Python / JavaScript 基础</h3>
+                <div class="space-y-2 text-sm text-gray-600">
+                    <p><i class="fa-solid fa-cube mr-2 text-green-500"></i><strong>核心：</strong>掌握变量、循环、条件判断。</p>
+                    <p><i class="fa-solid fa-gamepad mr-2 text-green-500"></i><strong>项目：</strong>编写算法控制英雄战斗。</p>
+                    <p class="bg-green-50 p-2 rounded text-green-800 font-bold">目标：建立编程直觉</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="marker stage-2" style="bottom: 350px; left: 250px;">
+            <div class="marker-label">
+                <div class="icon-circle bg-blue-600"><i class="fa-solid fa-layer-group"></i></div>
+                <span>第二阶段：全栈见习生</span>
+            </div>
+            <div class="marker-popup">
+                <h3 class="font-bold text-lg text-blue-700 mb-2">Web 开发实战</h3>
+                <div class="space-y-2 text-sm text-gray-600">
+                    <p><i class="fa-brands fa-html5 mr-2 text-blue-500"></i><strong>核心：</strong>HTML/CSS + 交互逻辑。</p>
+                    <p><i class="fa-solid fa-clone mr-2 text-blue-500"></i><strong>项目：</strong>克隆“2048”等经典游戏并上线。</p>
+                    <p class="bg-blue-50 p-2 rounded text-blue-800 font-bold">目标：完整产品开发视角</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="marker stage-3" style="bottom: 550px; right: 250px;">
+            <div class="marker-label">
+                <div class="icon-circle bg-purple-600"><i class="fa-solid fa-gears"></i></div>
+                <span>第三阶段：框架工匠</span>
+            </div>
+            <div class="marker-popup">
+                <h3 class="font-bold text-lg text-purple-700 mb-2">React / Node.js 工程化</h3>
+                <div class="space-y-2 text-sm text-gray-600">
+                    <p><i class="fa-solid fa-toolbox mr-2 text-purple-500"></i><strong>核心：</strong>主流框架、状态管理、工具链。</p>
+                    <p><i class="fa-solid fa-users mr-2 text-purple-500"></i><strong>项目：</strong>开发多人在线策略游戏后台。</p>
+                    <p class="bg-purple-50 p-2 rounded text-purple-800 font-bold">目标：真实工作环境准备</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="marker stage-4" style="top: 180px; left: 460px;">
+            <div class="marker-label">
+                <div class="icon-circle bg-yellow-600"><i class="fa-solid fa-flag"></i></div>
+                <span>第四阶段：开源贡献者</span>
+            </div>
+            <div class="marker-popup">
+                <h3 class="font-bold text-lg text-yellow-700 mb-2">The Pro League</h3>
+                <div class="space-y-2 text-sm text-gray-600">
+                    <p><i class="fa-brands fa-git-alt mr-2 text-yellow-500"></i><strong>核心：</strong>Git流、为游戏引擎提交代码。</p>
+                    <p><i class="fa-solid fa-bug mr-2 text-yellow-500"></i><strong>项目：</strong>修复Bug、设计新关卡。</p>
+                    <p class="bg-yellow-50 p-2 rounded text-yellow-800 font-bold">目标：简历上最闪亮的一笔</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute z-10 animate-bounce" style="bottom: 180px; left: 500px;">
+            <div class="w-10 h-10 bg-white rounded-full border-2 border-gray-800 flex items-center justify-center shadow-lg text-xl">
+                🧙‍♂️
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

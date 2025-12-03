@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat - Bento Grid Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#4285F4',
+                        neutral: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            800: '#1f2937',
+                            900: '#111827',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Poppins"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'hover': '0 10px 25px -5px rgba(66, 133, 244, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f5f5f7; /* Apple style light grey background */
+            display: flex;
+            justify-content: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+
+        /* 锁定显示区域，模拟画板 */
+        #bento-container {
+            width: 900px;
+            height: 1200px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* 卡片通用样式 */
+        .bento-card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* 16px rounded corners */
+            padding: 2rem;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 悬停效果：边框变色 + 轻微上浮 */
+        .bento-card:hover {
+            transform: translateY(-4px);
+            border-color: #4285F4;
+            box-shadow: 0 10px 30px -5px rgba(66, 133, 244, 0.1);
+        }
+        
+        /* 装饰性背景图标 */
+        .bg-icon {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 8rem;
+            opacity: 0.03;
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        /* 隐藏滚动条 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <main id="bento-container">
+
+        <div class="bento-card col-span-2 row-span-2 justify-between">
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-brand"></span>
+                    <span class="font-display font-bold text-sm text-gray-400 tracking-wider uppercase">Platform</span>
+                </div>
+                <h1 class="font-sans font-extrabold text-5xl text-neutral-900 leading-tight">
+                    CodeCombat:<br>
+                    <span class="text-brand">成年人</span>的第一行代码。
+                </h1>
+                <p class="font-sans text-lg text-gray-500 max-w-md leading-relaxed mt-4">
+                    告别枯燥教程。这不仅仅是解谜，而是一个将 Python 和 JavaScript 变成你手中武器的编程沙盒。
+                </p>
+            </div>
+            
+            <div class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="font-display text-3xl font-bold text-neutral-800">100%</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wide">Immersive</p>
+                </div>
+                <div class="h-8 w-px bg-gray-200"></div>
+                <div>
+                    <p class="font-display text-3xl font-bold text-neutral-800">No</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wide">Childish Stuff</p>
+                </div>
+                <div class="h-8 w-px bg-gray-200"></div>
+                <div class="text-right">
+                    <p class="font-sans text-sm font-semibold text-gray-600">从游戏开始</p>
+                    <p class="font-sans text-sm font-semibold text-gray-600">重塑职业生涯</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-code bg-icon"></i>
+        </div>
+
+        <div class="bento-card col-span-1 row-span-1 justify-center items-center text-center">
+            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4 text-brand">
+                <i class="fa-solid fa-layer-group text-xl"></i>
+            </div>
+            <h3 class="font-sans font-bold text-xl text-neutral-800 mb-2">工业级语言</h3>
+            <div class="flex gap-2 justify-center mt-2">
+                <span class="px-3 py-1 bg-gray-100 rounded text-xs font-semibold text-gray-600">Python</span>
+                <span class="px-3 py-1 bg-gray-100 rounded text-xs font-semibold text-gray-600">JS</span>
+                <span class="px-3 py-1 bg-gray-100 rounded text-xs font-semibold text-gray-600">C++</span>
+            </div>
+        </div>
+
+        <div class="bento-card col-span-1 row-span-1">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="font-sans font-bold text-lg text-neutral-800">面向结果</h3>
+                <i class="fa-solid fa-briefcase text-gray-300"></i>
+            </div>
+            <p class="font-sans text-sm text-gray-500 leading-relaxed">
+                课程直接对标<strong class="text-brand">求职面试</strong>。不只学语法，更掌握如何解决问题、构建项目。
+            </p>
+            <div class="mt-auto pt-4">
+                 <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                     <div class="h-full bg-brand w-3/4 rounded-full"></div>
+                 </div>
+                 <p class="text-[10px] text-gray-400 mt-1 text-right">Skill Growth</p>
+            </div>
+        </div>
+
+        <div class="bento-card col-span-1 row-span-2 bg-neutral-900 text-white border-none">
+            <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-dungeon text-brand text-xl"></i>
+                <h3 class="font-sans font-bold text-xl">情境化学习</h3>
+            </div>
+            <p class="text-gray-400 text-sm mb-6">
+                在“部落战争”中，你的每一行代码都即时产生视觉效果。
+            </p>
+            
+            <div class="flex flex-col gap-4 mt-auto">
+                <div class="flex items-center gap-3 opacity-50">
+                    <div class="w-6 h-6 rounded border border-gray-600 flex items-center justify-center text-xs">1</div>
+                    <span class="text-sm font-mono">理论 / 记忆</span>
+                    <span class="ml-auto text-xs text-red-400">OLD</span>
+                </div>
+                <div class="w-px h-4 bg-gray-700 ml-3"></div>
+                <div class="flex items-center gap-3 text-brand">
+                    <div class="w-6 h-6 rounded bg-brand text-white flex items-center justify-center text-xs shadow-[0_0_10px_rgba(66,133,244,0.5)]">2</div>
+                    <span class="text-sm font-mono font-bold">需求 & 编码</span>
+                    <span class="ml-auto text-xs text-brand">NEW</span>
+                </div>
+                <div class="w-px h-4 bg-brand ml-3 opacity-50"></div>
+                <div class="flex items-center gap-3 text-brand">
+                    <div class="w-6 h-6 rounded bg-brand text-white flex items-center justify-center text-xs shadow-[0_0_10px_rgba(66,133,244,0.5)]">3</div>
+                    <span class="text-sm font-mono font-bold">验证 & 迭代</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-gamepad bg-icon text-white opacity-[0.05]"></i>
+        </div>
+
+        <div class="bento-card col-span-1 row-span-1">
+             <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center mb-3 text-gray-700">
+                <i class="fa-solid fa-user-clock text-sm"></i>
+            </div>
+            <h3 class="font-sans font-bold text-lg text-neutral-800 mb-2">专为成人设计</h3>
+            <p class="font-sans text-xs text-gray-500 leading-relaxed">
+                跳过小儿科讲解。探讨<span class="text-brand font-medium">技术债务</span>、框架选择等真实话题。
+            </p>
+        </div>
+
+        <div class="bento-card col-span-1 row-span-1">
+            <div class="absolute top-0 right-0 p-4">
+                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded">ONLINE</span>
+            </div>
+             <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center mb-3 text-gray-700">
+                <i class="fa-solid fa-robot text-sm"></i>
+            </div>
+            <h3 class="font-sans font-bold text-lg text-neutral-800 mb-2">AI 辅助导师</h3>
+            <p class="font-sans text-xs text-gray-500 leading-relaxed">
+                不仅指出错误，更以<span class="border-b border-brand border-dashed">资深视角</span>提问，引导最优解。
+            </p>
+        </div>
+
+        <div class="bento-card col-span-2 row-span-1 flex-row items-center justify-between group cursor-pointer bg-white">
+            <div class="flex flex-col justify-center h-full z-10">
+                <p class="font-sans text-xs text-gray-400 uppercase tracking-widest mb-1">Start The Adventure</p>
+                <h2 class="font-sans font-bold text-2xl text-neutral-900 group-hover:text-brand transition-colors">
+                    这不是游戏，是冒险。
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">你的第一行有效代码，从今天开始。</p>
+            </div>
+            <div class="h-12 w-12 rounded-full bg-neutral-900 text-white flex items-center justify-center group-hover:bg-brand group-hover:scale-110 transition-all duration-300 z-10 shadow-lg">
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+            <div class="absolute right-[-20px] top-1/2 -translate-y-1/2 w-40 h-40 rounded-full border-[20px] border-gray-50 group-hover:border-blue-50 transition-colors duration-300"></div>
+        </div>
+
+    </main>
+
+</body>
+</html>

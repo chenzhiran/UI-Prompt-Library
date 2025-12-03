@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat 进阶蓝图</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: '#00B894', // Mint Green
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        // 优先使用系统字体，针对中文优化 HarmonyOS Sans SC
+                        sans: [
+                            '-apple-system', 
+                            'BlinkMacSystemFont', 
+                            '"SF Pro Display"', 
+                            '"HarmonyOS Sans SC"', 
+                            '"Microsoft YaHei"', 
+                            'sans-serif'
+                        ],
+                    },
+                    boxShadow: {
+                        'card': '0 2px 8px -2px rgba(0, 0, 0, 0.05)',
+                        'card-hover': '0 12px 20px -8px rgba(0, 184, 148, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 卡片基础过渡动画 */
+        .roadmap-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 卡片悬停效果：上浮 + 变色 + 阴影 */
+        .roadmap-card:hover {
+            transform: translateY(-4px);
+            border-color: #00B894;
+            box-shadow: 0 12px 20px -8px rgba(0, 184, 148, 0.15);
+        }
+
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 列表项前的点 */
+        .list-dot::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #00B894;
+            margin-right: 8px;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-12 flex justify-center">
+
+    <main class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6 content-start">
+
+        <div class="roadmap-card col-span-1 md:col-span-2 p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-theme/10 text-theme text-xs font-bold uppercase tracking-wider mb-4">
+                    Product Roadmap
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+                    从零到开发者：<br class="hidden md:block">你的 CodeCombat 进阶蓝图
+                </h1>
+                <p class="text-lg text-slate-600 max-w-2xl leading-relaxed">
+                    CodeCombat为你设计了一条清晰、可追踪的成人学习路径，将游戏关卡转化为扎实的工程能力。
+                </p>
+            </div>
+            <i class="fa-solid fa-map-location-dot text-[150px] text-slate-50 absolute -right-6 -bottom-6 -z-0"></i>
+        </div>
+
+        <div class="roadmap-card p-8 flex flex-col h-full">
+            <div class="flex justify-between items-start">
+                <div class="icon-circle bg-blue-50 text-blue-500">
+                    <i class="fa-brands fa-python"></i>
+                </div>
+                <span class="text-slate-400 font-mono text-sm font-bold">01</span>
+            </div>
+            
+            <h2 class="text-xl font-bold text-slate-900 mb-1">语法学徒</h2>
+            <p class="text-sm text-slate-500 mb-6 font-medium">Python / JavaScript</p>
+
+            <div class="space-y-4 flex-grow">
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Core</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">在游戏关卡中掌握变量、循环、函数、条件判断等核心语法。</p>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Project</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">编写算法控制英雄移动、攻击、收集资源。</p>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-slate-100">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-bullseye text-theme mt-1 text-xs"></i>
+                    <p class="text-sm text-slate-600 font-medium">建立坚实的编程直觉，能独立解决数百个微型逻辑问题。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="roadmap-card p-8 flex flex-col h-full">
+            <div class="flex justify-between items-start">
+                <div class="icon-circle bg-purple-50 text-purple-500">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <span class="text-slate-400 font-mono text-sm font-bold">02</span>
+            </div>
+
+            <h2 class="text-xl font-bold text-slate-900 mb-1">全栈见习生</h2>
+            <p class="text-sm text-slate-500 mb-6 font-medium">Web Development</p>
+
+            <div class="space-y-4 flex-grow">
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Core</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">学习HTML/CSS，并运用Python/JavaScript开发交互式网页游戏。</p>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Project</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">构建自己的“克隆”版经典游戏（如2048、贪吃蛇），并部署上线。</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-slate-100">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-bullseye text-theme mt-1 text-xs"></i>
+                    <p class="text-sm text-slate-600 font-medium">理解前端与后端的基础交互，形成完整的“产品”开发视角。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="roadmap-card p-8 flex flex-col h-full">
+            <div class="flex justify-between items-start">
+                <div class="icon-circle bg-orange-50 text-orange-500">
+                    <i class="fa-brands fa-react"></i>
+                </div>
+                <span class="text-slate-400 font-mono text-sm font-bold">03</span>
+            </div>
+
+            <h2 class="text-xl font-bold text-slate-900 mb-1">框架工匠</h2>
+            <p class="text-sm text-slate-500 mb-6 font-medium">React, Node.js 等</p>
+
+            <div class="space-y-4 flex-grow">
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Core</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">在更复杂的游戏项目中，引入主流框架和工具链，管理复杂状态和组件。</p>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Project</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">开发多人在线策略游戏的界面或后台服务模块。</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-slate-100">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-bullseye text-theme mt-1 text-xs"></i>
+                    <p class="text-sm text-slate-600 font-medium">体验现代化、工程化的协作开发流程，为真实工作环境做好准备。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="roadmap-card p-8 flex flex-col h-full">
+            <div class="flex justify-between items-start">
+                <div class="icon-circle bg-gray-100 text-gray-700">
+                    <i class="fa-brands fa-github"></i>
+                </div>
+                <span class="text-slate-400 font-mono text-sm font-bold">04</span>
+            </div>
+
+            <h2 class="text-xl font-bold text-slate-900 mb-1">开源贡献者</h2>
+            <p class="text-sm text-slate-500 mb-6 font-medium">Open Source Workflow</p>
+
+            <div class="space-y-4 flex-grow">
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Core</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">深入学习Git与开源工作流，直接为CodeCombat的游戏引擎或关卡库提交代码。</p>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Project</h3>
+                    <p class="text-sm text-slate-700 leading-relaxed">修复Bug、设计新关卡、开发新功能。</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-slate-100">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-bullseye text-theme mt-1 text-xs"></i>
+                    <p class="text-sm text-slate-600 font-medium">构建你的可验证贡献记录，这是你技术简历上最闪亮的一笔。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="roadmap-card col-span-1 md:col-span-2 p-8 bg-gradient-to-r from-slate-900 to-slate-800 border-none group cursor-pointer">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-theme flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-terminal"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white mb-1">每一步，你都在编写真实的代码。</h2>
+                        <p class="text-slate-400 text-sm">构建真实的项目，从今天开始。</p>
+                    </div>
+                </div>
+                <div class="text-white opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                    <i class="fa-solid fa-arrow-right text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

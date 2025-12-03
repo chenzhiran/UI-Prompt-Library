@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Brain Refactoring - Zed UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Merriweather:wght@300;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#F59E0B', // Amber 500
+                        ui: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            800: '#1f2937',
+                            900: '#111827',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Merriweather"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                    },
+                    fontSize: {
+                        'xxs': '0.65rem',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #e5e5e5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-feature-settings: "cv11", "ss01";
+        }
+
+        #editor-window {
+            width: 900px;
+            height: 1200px;
+            background-color: #ffffff;
+            /* 极细微的边框，模拟 Retina 屏幕下的锐利感 */
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 20px 50px -10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 隐藏滚动条 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 极简边框 */
+        .border-thin {
+            border-width: 1px;
+            border-color: #e5e7eb;
+        }
+
+        /* 代码块背景微调 */
+        .code-block {
+            background-color: #f9fafb;
+            border: 1px solid #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="editor-window" class="text-ui-800 font-sans">
+        
+        <header class="h-10 border-b border-thin flex items-center justify-between px-5 bg-white shrink-0 select-none">
+            <div class="flex items-center gap-2 font-mono text-xs text-gray-400 tracking-wide">
+                <i class="fa-solid fa-cube text-accent/80 text-xxs"></i>
+                <span>brain_v2</span>
+                <span class="text-gray-300">/</span>
+                <span>workflows</span>
+                <span class="text-gray-300">/</span>
+                <span class="text-ui-800 font-medium">pipeline_refactor.md</span>
+            </div>
+            
+            <div class="flex items-center gap-4 text-xs font-mono text-gray-400">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-accent"></span>
+                    <span>Live</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 flex overflow-hidden">
+            
+            <aside class="w-14 pt-12 flex flex-col items-end pr-4 text-gray-300 font-mono text-xs select-none shrink-0 bg-white">
+                <div>1</div>
+                <div>2</div>
+                <div class="mt-8">10</div>
+                <div class="mt-2">12</div>
+                <div class="mt-32">25</div>
+                <div class="mt-36">48</div>
+                <div class="mt-36">72</div>
+                <div class="mt-auto mb-12 text-accent">99</div>
+            </aside>
+
+            <article class="flex-1 pr-16 pl-8 py-12 flex flex-col h-full">
+                
+                <div class="mb-10">
+                    <h1 class="font-serif font-bold text-4xl text-ui-900 leading-tight mb-4 tracking-tight">
+                        第二大脑升级指南：<br>
+                        用 AI 重构每日信息流水线
+                    </h1>
+                    <div class="flex items-start gap-3 text-gray-500 text-sm leading-relaxed border-l-2 border-accent pl-4">
+                        <p>
+                            如果只将 AI 用于聊天，你仅挖掘了它 1% 的潜力。<br>
+                            以下是三位前沿知识工作者毫不保留的 <span class="font-mono text-xs bg-gray-100 px-1 rounded text-ui-900">Config</span> 切片。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex flex-col gap-6">
+                    
+                    <section class="border border-thin rounded-[0.375rem] p-5 hover:border-accent/30 transition-colors duration-300">
+                        <div class="flex justify-between items-start mb-3">
+                            <h2 class="font-serif font-bold text-lg text-ui-900">01. 深度阅读与知识合成</h2>
+                            <span class="font-mono text-[10px] text-accent border border-accent/20 px-2 py-0.5 rounded uppercase tracking-wider">Analysis</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-[120px_1fr] gap-4 text-sm">
+                            <div class="text-gray-400 font-mono text-xs pt-1">USER_PROFILE</div>
+                            <div class="font-medium text-ui-800">科技基金分析师</div>
+                            
+                            <div class="text-gray-400 font-mono text-xs pt-1">WORKFLOW</div>
+                            <div>
+                                <p class="text-gray-600 mb-2">将 10+ 篇行业报告、论文 PDF 同时输入 AI。</p>
+                                <div class="code-block p-3 rounded font-mono text-xs text-gray-700 leading-relaxed">
+                                    > 指令：请以“颠覆性储能技术”为主题，将这堆文档中的观点进行强制关联，识别出<span class="text-accent font-bold">共识</span>、<span class="text-accent font-bold">冲突</span>和<span class="text-accent font-bold">空白</span>的研究领域，并用一张关联图表示。
+                                </div>
+                                <p class="text-gray-400 text-xs mt-2 flex items-center gap-1">
+                                    <i class="fa-solid fa-arrow-right text-[10px]"></i> 产出：动态竞争格局报告
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="border border-thin rounded-[0.375rem] p-5 hover:border-accent/30 transition-colors duration-300">
+                        <div class="flex justify-between items-start mb-3">
+                            <h2 class="font-serif font-bold text-lg text-ui-900">02. 从灵感碎片到结构化输出</h2>
+                            <span class="font-mono text-[10px] text-accent border border-accent/20 px-2 py-0.5 rounded uppercase tracking-wider">Creation</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-[120px_1fr] gap-4 text-sm">
+                            <div class="text-gray-400 font-mono text-xs pt-1">USER_PROFILE</div>
+                            <div class="font-medium text-ui-800">专栏作家</div>
+                            
+                            <div class="text-gray-400 font-mono text-xs pt-1">WORKFLOW</div>
+                            <div>
+                                <p class="text-gray-600 mb-2">在 Heptabase 中记录碎片，随后将整个画板丢给 AI。</p>
+                                <div class="code-block p-3 rounded font-mono text-xs text-gray-700 leading-relaxed">
+                                    > 指令：请运用“齐美尔社会学视角”作为框架，将它们重组为草稿大纲，并指出材料中<span class="text-accent font-bold">最薄弱的环节</span>。
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="border border-thin rounded-[0.375rem] p-5 hover:border-accent/30 transition-colors duration-300">
+                        <div class="flex justify-between items-start mb-3">
+                            <h2 class="font-serif font-bold text-lg text-ui-900">03. 决策模拟与挑战预演</h2>
+                            <span class="font-mono text-[10px] text-accent border border-accent/20 px-2 py-0.5 rounded uppercase tracking-wider">Strategy</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-[120px_1fr] gap-4 text-sm">
+                            <div class="text-gray-400 font-mono text-xs pt-1">USER_PROFILE</div>
+                            <div class="font-medium text-ui-800">创业公司 CEO</div>
+                            
+                            <div class="text-gray-400 font-mono text-xs pt-1">WORKFLOW</div>
+                            <div>
+                                <p class="text-gray-600 mb-2">面临关键战略选择时，让 AI 进行多角色扮演。</p>
+                                <div class="code-block p-3 rounded font-mono text-xs text-gray-700 leading-relaxed">
+                                    > 角色：[乐观的VC, 悲观的财务顾问, 挑剔的客户]<br>
+                                    > 任务：基于公开逻辑进行模拟辩论，生成极具挑战性的反驳，迫使我<span class="text-accent font-bold">提前思考盲点</span>。
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-thin">
+                    <div class="font-mono text-xs text-gray-400 mb-2">$ cat core_philosophy.txt</div>
+                    <p class="font-serif text-lg text-ui-900 leading-relaxed font-bold">
+                        AI 不是替你思考的“答案机”，而是最强有力的<span class="text-accent">思维碰撞伙伴</span>。
+                    </p>
+                    <p class="font-sans text-sm text-gray-600 mt-2">
+                        你的核心能力重构为：<span class="border-b border-gray-300 pb-0.5">提出绝佳问题</span>、<span class="border-b border-gray-300 pb-0.5">精准判断</span>与<span class="border-b border-gray-300 pb-0.5">负责决策</span>。
+                    </p>
+                </div>
+
+            </article>
+        </main>
+
+        <footer class="h-8 bg-ui-50 border-t border-thin flex items-center justify-between px-4 font-mono text-[10px] text-gray-500 shrink-0 select-none">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-code-branch text-accent"></i>
+                    feature/ai-integration
+                </span>
+                <span><i class="fa-regular fa-circle-check text-green-600 mr-1"></i>Optimized</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>UTF-8</span>
+                <span>Markdown</span>
+                <span>Ln 99, Col 1</span>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

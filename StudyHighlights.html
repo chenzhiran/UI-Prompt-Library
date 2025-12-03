@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholar Notes - CodeCombat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Caveat:wght@400;700&family=Georgia&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#222222',
+                        pen: '#1d4ed8', // Blue ballpoint pen
+                        highlight: 'rgba(168, 85, 247, 0.25)', // Theme Purple (Highlighter)
+                        highlightStrong: 'rgba(168, 85, 247, 0.4)',
+                        paper: '#ffffff',
+                    },
+                    fontFamily: {
+                        body: ['"Georgia"', '"Noto Serif SC"', 'serif'],
+                        hand: ['"Caveat"', 'cursive'],
+                    },
+                    spacing: {
+                        'A4-w': '850px',
+                        'A4-h': '1100px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #52525b; /* Desk color */
+            display: flex;
+            justify-content: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+
+        /* A4 Paper Simulation */
+        #doc-paper {
+            width: 850px;
+            height: 1100px;
+            background-color: #ffffff;
+            /* Subtle texture */
+            background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px);
+            background-size: 100% 2rem; /* Line grid hint */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            padding: 60px 80px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr 200px; /* Main text + Margin for notes */
+            gap: 40px;
+        }
+
+        /* Typography */
+        h1 { font-family: 'Georgia', serif; letter-spacing: -0.5px; }
+        p, li { font-family: 'Georgia', serif; line-height: 1.8; color: #333; }
+        
+        /* 荧光笔高亮效果 - 模拟手工涂抹 */
+        .mark {
+            background: linear-gradient(104deg, rgba(168,85,247,0) 0%, rgba(168,85,247,0.25) 2%, rgba(168,85,247,0.25) 98%, rgba(168,85,247,0) 100%);
+            border-radius: 4px 2px;
+            padding: 0 4px;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        /* 重点下划线 - 红色波浪 */
+        .wavy-line {
+            text-decoration: underline;
+            text-decoration-style: wavy;
+            text-decoration-color: #ef4444;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 4px;
+        }
+
+        /* 重点方框 - 手绘感 */
+        .hand-box {
+            border: 2px solid #ef4444;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            padding: 2px 6px;
+            display: inline-block;
+        }
+
+        /* 侧边栏手写批注 */
+        .sidenote {
+            font-family: 'Caveat', cursive;
+            color: #1d4ed8; /* Blue pen */
+            font-size: 1.1rem;
+            line-height: 1.2;
+            position: relative;
+            margin-bottom: 2rem;
+            transform: rotate(-1deg);
+        }
+
+        /* 箭头连接线 (SVG) */
+        .arrow-svg {
+            position: absolute;
+            pointer-events: none;
+            fill: none;
+            stroke: #1d4ed8;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+        }
+        
+        /* 顶部元数据区 */
+        .meta-header {
+            grid-column: 1 / -1;
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Arial', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="doc-paper">
+        
+        <div class="meta-header">
+            <div>Doc Ref: CC-ECO-2023</div>
+            <div>Date: 2023.12.04</div>
+            <div>Subject: Developer Ecosystem Analysis</div>
+        </div>
+
+        <div class="prose prose-slate max-w-none">
+            
+            <h1 class="text-3xl font-bold text-ink mb-6">
+                超越学习平台：<br>CodeCombat的开发者生态与职业桥梁
+            </h1>
+
+            <p class="mb-8 text-justify">
+                当数百万成年学习者汇聚，CodeCombat已演变为一个独特的<span class="mark font-bold">科技人才生态圈</span>。它不再仅仅是一个教学工具，而是连接学习者与真实科技世界的纽带。
+            </p>
+
+            <div class="mb-8 relative">
+                <h3 class="text-lg font-bold uppercase tracking-wide mb-2 text-ink border-l-4 border-black pl-3">I. 活跃的开发者社区</h3>
+                <ul class="list-none pl-0 space-y-4">
+                    <li>
+                        <strong>全球排名与竞赛：</strong> 在月度编程竞技场中，与全球同行一较高下。你的排名和解决方案是<span class="wavy-line">公开的技术名片</span>。
+                    </li>
+                    <li>
+                        <strong>代码审查文化：</strong> 高级关卡的最优解讨论区，充斥着关于算法效率、代码风格和设计模式的深度交流，堪比<span class="mark">高级 Code Review</span>。
+                    </li>
+                    <li>
+                        <strong>用户生成内容：</strong> 资深玩家使用我们提供的关卡编辑器，创作了成千上万个自定义挑战，主题从机器学习算法到区块链模拟，形成了一个<span class="italic">自我生长的内容宇宙</span>。
+                    </li>
+                </ul>
+                <svg class="arrow-svg" style="top: 80px; right: -40px; width: 60px; height: 40px;">
+                    <path d="M0,20 Q30,10 50,30" />
+                    <path d="M45,25 L50,30 L45,35" />
+                </svg>
+            </div>
+
+            <div class="mb-8 relative">
+                <h3 class="text-lg font-bold uppercase tracking-wide mb-2 text-ink border-l-4 border-black pl-3">II. 直通职场的技能认证</h3>
+                <ul class="list-none pl-0 space-y-4">
+                    <li>
+                        <strong>技能徽章：</strong> 完成特定路径（如“全栈JavaScript开发者”）后，获得可验证的<span class="mark">链上技能徽章</span>，可直接嵌入 <span class="hand-box">LinkedIn</span> 或个人简历。
+                    </li>
+                    <li>
+                        <strong>合作企业项目：</strong> 我们与科技公司合作，将真实的、轻度化的业务问题（如API设计、数据清洗）作为高级关卡发布。<span class="bg-yellow-200 px-1">优秀解决方案可能直接获得面试机会。</span>
+                    </li>
+                    <li>
+                        <strong>人才库：</strong> 授权企业直接筛选并联系在特定领域（如游戏AI、性能优化）表现顶尖的玩家。
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-12 pt-6 border-t border-gray-300 relative">
+                <p class="font-bold text-xl italic text-center">
+                    在这里，学习、实践、证明、连接——<br>形成一个完整的<span class="mark">职业发展闭环</span>。
+                </p>
+                <svg class="arrow-svg" style="left: -20px; top: 10px; width: 40px; height: 40px; transform: rotate(-90deg);">
+                    <path d="M10,10 C10,0 30,0 30,10 C30,20 10,20 10,30" stroke="#ef4444" />
+                    <path d="M5,25 L10,30 L15,25" stroke="#ef4444" />
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="pt-24 flex flex-col">
+            
+            <div class="sidenote" style="top: 40px;">
+                <i class="fa-solid fa-pen-fancy text-sm mr-1"></i>
+                这是核心价值！不仅是学，更是<b>Community</b>。
+            </div>
+
+            <div class="sidenote" style="top: 80px;">
+                实战经验 > 理论。<br>
+                类似于 GitHub 的 contribution graph？
+            </div>
+
+            <div class="sidenote" style="top: 220px;">
+                <span class="bg-gray-100 p-2 shadow-sm border border-gray-200 text-sm">
+                    Q: 认证含金量如何？<br>
+                    A: 链上验证 = 防伪
+                </span>
+            </div>
+
+            <div class="sidenote" style="top: 280px;">
+                <i class="fa-solid fa-star text-yellow-500"></i>
+                <b>直通面试！</b><br>
+                这是最大的差异化优势。
+            </div>
+
+            <div class="sidenote" style="top: 350px;">
+                <u>Closed Loop</u><br>
+                Learn -> Earn?
+            </div>
+
+        </div>
+
+        <div class="absolute -top-4 right-20 text-6xl text-gray-400 transform -rotate-45 z-20 drop-shadow-lg">
+            <i class="fa-solid fa-paperclip"></i>
+        </div>
+
+    </div>
+
+</body>
+</html>

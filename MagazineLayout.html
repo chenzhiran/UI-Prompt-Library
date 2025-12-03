@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat - Digital Print Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: '#4285F4',
+                        dark: '#1f2937',
+                        light: '#f8f9fa',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif SC"', 'serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 强制固定尺寸与无滚动 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-feature-settings: "palt";
+        }
+
+        #canvas {
+            width: 1200px;
+            height: 1600px;
+            background-color: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 巨大的镂空文字效果 */
+        .outline-text {
+            -webkit-text-stroke: 3px #4285F4;
+            color: transparent;
+            font-family: 'Noto Serif SC', serif;
+            line-height: 0.8;
+            opacity: 0.8;
+        }
+
+        /* 背景网格纹理 */
+        .bg-grid {
+            background-image: linear-gradient(#e5e7eb 1px, transparent 1px),
+            linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        /* 极细边框 */
+        .border-hairline {
+            border-width: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="canvas" class="bg-grid">
+        
+        <header class="pt-12 px-12 pb-6 border-b-4 border-theme flex justify-between items-end bg-white">
+            <div>
+                <div class="font-sans text-theme tracking-[0.3em] text-lg font-light uppercase mb-2">Issue / Developer Edition</div>
+                <h1 class="font-serif text-dark text-6xl font-black tracking-tighter leading-none">
+                    CODE<span class="text-theme">COMBAT</span>
+                </h1>
+                <h2 class="font-serif text-dark text-3xl mt-2">成年人的第一行代码</h2>
+            </div>
+            <div class="text-right">
+                <div class="font-sans text-gray-400 font-light text-sm">PUBLISHED</div>
+                <div class="font-serif text-dark text-2xl font-bold">2025.DEC</div>
+            </div>
+        </header>
+
+        <div class="flex-grow flex px-12 py-10 gap-8">
+            
+            <div class="w-1/3 flex flex-col justify-start relative">
+                <p class="font-sans text-xs text-gray-500 tracking-widest mb-4 text-justify">
+                    NO MORE BORING TUTORIALS. START CODING WITH REAL GAMES. INDUSTRIAL LEVEL LANGUAGES.
+                </p>
+                
+                <div class="outline-text text-[420px] absolute -left-8 top-10 select-none pointer-events-none z-0">
+                    C
+                </div>
+                
+                <div class="relative z-10 mt-[380px] bg-white/90 backdrop-blur-sm p-6 border-l-8 border-theme shadow-xl">
+                    <i class="fa-solid fa-code text-4xl text-theme mb-4"></i>
+                    <h3 class="font-serif text-3xl font-bold text-dark leading-tight mb-2">编程沙盒</h3>
+                    <p class="font-serif text-lg text-gray-600 font-bold leading-relaxed">
+                        这不仅仅是另一个通关谜题，而是将 Python 与 JavaScript 变成你手中武器的实战演练场。
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-2/3 flex flex-col gap-6">
+                <div class="bg-dark text-white p-8 shadow-lg">
+                    <h3 class="font-serif text-3xl font-bold mb-3">告别枯燥教程</h3>
+                    <p class="font-serif text-gray-300 text-lg leading-relaxed">
+                        在真实的游戏挑战中编写代码。学习循环从“理论-记忆”彻底转变为“需求-编码-验证-迭代”。
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 h-full">
+                    <div class="bg-white p-6 border-t-4 border-theme shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="font-sans text-theme text-sm font-light">01 / CONTEXT</span>
+                                <i class="fa-solid fa-dungeon text-2xl text-gray-300"></i>
+                            </div>
+                            <h4 class="font-serif text-2xl font-bold text-dark mb-3">情境化学习</h4>
+                            <p class="font-serif text-gray-600 text-base font-bold leading-snug">
+                                地牢逃生、部落战争。每一行代码即时产生视觉反馈，还原真实开发流程。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 border-t-4 border-theme shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="font-sans text-theme text-sm font-light">02 / RESULT</span>
+                                <i class="fa-solid fa-bullseye text-2xl text-gray-300"></i>
+                            </div>
+                            <h4 class="font-serif text-2xl font-bold text-dark mb-3">面向结果</h4>
+                            <p class="font-serif text-gray-600 text-base font-bold leading-snug">
+                                对标求职实战技能。不止语法，更掌握解决问题与项目构建的核心能力。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 border-t-4 border-theme shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="font-sans text-theme text-sm font-light">03 / ADULTS ONLY</span>
+                                <i class="fa-solid fa-user-tie text-2xl text-gray-300"></i>
+                            </div>
+                            <h4 class="font-serif text-2xl font-bold text-dark mb-3">专为成人设计</h4>
+                            <p class="font-serif text-gray-600 text-base font-bold leading-snug">
+                                节奏紧凑，直指核心。跳过小儿科，深入技术债务与框架选择等实际话题。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-theme/10 p-6 border-t-4 border-theme shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="font-sans text-theme text-sm font-light">04 / AI MENTOR</span>
+                                <i class="fa-solid fa-robot text-2xl text-theme"></i>
+                            </div>
+                            <h4 class="font-serif text-2xl font-bold text-dark mb-3">AI 辅助导师</h4>
+                            <p class="font-serif text-gray-600 text-base font-bold leading-snug">
+                                理解代码逻辑，以资深开发者视角提问，引导你自主发现最优解。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-200 py-12 px-12 border-y border-gray-300 flex items-center gap-8">
+            <div class="font-serif text-6xl text-theme">“</div>
+            <div class="flex-grow">
+                <p class="font-serif text-4xl font-black text-dark leading-tight">
+                    这不是游戏，<br>这是一场以代码为武器的冒险。
+                </p>
+            </div>
+            <div class="w-1/4 border-l-2 border-dark pl-6">
+                 <p class="font-sans text-sm text-gray-500 uppercase tracking-widest mb-1">Mission</p>
+                 <p class="font-serif text-xl font-bold text-dark">从游戏开始，<br>重塑职业生涯。</p>
+            </div>
+        </div>
+
+        <footer class="bg-dark text-white px-12 py-10 mt-auto flex justify-between items-center relative overflow-hidden">
+            <div class="absolute right-0 top-0 h-full w-1/3 bg-theme/20 skew-x-12 transform origin-bottom-right"></div>
+            
+            <div class="relative z-10 w-2/3">
+                <h2 class="font-serif text-4xl font-bold mb-2">你的第一行有效代码，将从今天开始。</h2>
+                <div class="flex gap-4 mt-4">
+                    <span class="inline-flex items-center gap-2 font-sans text-sm text-gray-400 uppercase tracking-wider">
+                        <i class="fa-brands fa-python"></i> Python
+                    </span>
+                    <span class="inline-flex items-center gap-2 font-sans text-sm text-gray-400 uppercase tracking-wider">
+                        <i class="fa-brands fa-js"></i> JavaScript
+                    </span>
+                    <span class="inline-flex items-center gap-2 font-sans text-sm text-gray-400 uppercase tracking-wider">
+                        <i class="fa-solid fa-code-branch"></i> C++
+                    </span>
+                </div>
+            </div>
+
+            <div class="relative z-10">
+                <button class="group bg-theme hover:bg-white hover:text-theme text-white font-serif font-bold text-xl px-10 py-5 transition-all duration-300 flex items-center gap-3">
+                    立即开始
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

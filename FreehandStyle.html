@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat Doodle Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Gochi+Hand&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#fef9e7',
+                        ink: '#5c4033',
+                        marker: {
+                            orange: '#ffbd69',
+                            blue: '#9ddfd3',
+                            green: '#cbf1f5',
+                            pink: '#ffc6c7',
+                            yellow: '#fff475'
+                        }
+                    },
+                    fontFamily: {
+                        hand: ['"Caveat"', 'cursive'],
+                        title: ['"ZCOOL KuaiLe"', '"Gochi Hand"', 'cursive'], // ZCOOL KuaiLe for sketchy Chinese title
+                    },
+                    boxShadow: {
+                        'sketch': '3px 4px 0px rgba(92, 64, 51, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* 画布设置：16:9 */
+        #sketchbook {
+            width: 1200px;
+            height: 675px;
+            background-color: #fef9e7;
+            /* 模拟点阵纸纹理 */
+            background-image: radial-gradient(#dcd6c0 2px, transparent 2px);
+            background-size: 24px 24px;
+            position: relative;
+            overflow: hidden;
+            color: #5c4033;
+            font-family: 'Caveat', cursive;
+        }
+
+        /* 核心手绘边框效果 - 模拟不规则描边 */
+        .doodle-box {
+            border: 3px solid #5c4033;
+            background: white;
+            box-shadow: 4px 6px 0px rgba(92, 64, 51, 0.15);
+            transition: transform 0.2s ease;
+        }
+        
+        /* 不同的不规则圆角，模拟手绘 */
+        .shape-1 { border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+        .shape-2 { border-radius: 25px 225px 25px 255px / 225px 25px 225px 25px; }
+        .shape-3 { border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px; }
+
+        /* 马克笔高亮效果 */
+        .highlight {
+            position: relative;
+            z-index: 1;
+        }
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: -5px;
+            width: 105%;
+            height: 40%;
+            background-color: rgba(255, 189, 105, 0.6);
+            z-index: -1;
+            transform: rotate(-2deg);
+            border-radius: 4px;
+        }
+        .highlight-blue::after { background-color: rgba(157, 223, 211, 0.6); }
+        .highlight-green::after { background-color: rgba(166, 210, 100, 0.4); }
+        .highlight-pink::after { background-color: rgba(255, 198, 199, 0.8); }
+
+        /* 胶带效果 */
+        .tape {
+            position: absolute;
+            width: 80px;
+            height: 25px;
+            background-color: rgba(255, 255, 255, 0.6);
+            opacity: 0.7;
+            border-left: 2px dashed rgba(0,0,0,0.1);
+            border-right: 2px dashed rgba(0,0,0,0.1);
+            transform: rotate(-45deg);
+            top: -10px;
+            left: 35%;
+            z-index: 10;
+        }
+
+        /* SVG 连接线动画 */
+        svg.connector {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            fill: none;
+            stroke: #5c4033;
+            stroke-width: 3;
+            stroke-dasharray: 5, 5; /* 虚线 */
+            stroke-linecap: round;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="sketchbook">
+
+        <i class="fa-regular fa-lightbulb absolute top-10 right-20 text-5xl text-marker-yellow animate-bounce" style="transform: rotate(15deg);"></i>
+        <div class="absolute bottom-10 left-20 text-6xl text-marker-green opacity-30" style="transform: rotate(-10deg); font-family: 'Gochi Hand'">#CodeLife</div>
+
+        <div class="absolute top-8 left-10 z-20 transform -rotate-2">
+            <h1 class="font-title text-6xl text-ink drop-shadow-sm">
+                CodeCombat <span class="text-4xl block ml-10 mt-2 font-hand font-bold text-[#e67e22]">进阶蓝图 (Roadmap)</span>
+            </h1>
+            <svg width="300" height="20" class="mt-1">
+                <path d="M5,10 Q150,20 290,5" stroke="#e67e22" stroke-width="4" fill="none" stroke-linecap="round" />
+            </svg>
+        </div>
+
+        <div class="doodle-box shape-1 absolute top-[160px] left-[60px] w-[260px] p-6 bg-white rotate-[-3deg]">
+            <div class="tape"></div>
+            <div class="text-center mb-3">
+                <span class="font-bold text-2xl highlight">1. 语法学徒</span>
+                <div class="text-sm text-gray-500 mt-1">(Python / JS)</div>
+            </div>
+            <ul class="text-xl leading-relaxed list-none pl-2">
+                <li><i class="fa-solid fa-check text-orange-400 mr-2"></i>掌握变量 & 循环</li>
+                <li><i class="fa-solid fa-gamepad text-orange-400 mr-2"></i>控制英雄战斗</li>
+                <li><i class="fa-solid fa-brain text-orange-400 mr-2"></i>建立编程直觉</li>
+            </ul>
+            <div class="absolute -bottom-4 -right-4 text-3xl text-orange-400 transform rotate-12">
+                <i class="fa-brands fa-python"></i>
+            </div>
+        </div>
+
+        <svg class="connector" width="200" height="100" style="top: 200px; left: 320px;">
+            <path d="M10,50 Q100,0 180,30" />
+            <path d="M170,20 L180,30 L170,40" stroke-width="2" /> </svg>
+
+        <div class="doodle-box shape-2 absolute top-[80px] left-[450px] w-[280px] p-6 bg-marker-green/20 rotate-[2deg]">
+            <div class="text-center mb-3">
+                <span class="font-bold text-2xl highlight highlight-blue">2. 全栈见习生</span>
+                <div class="text-sm text-gray-500 mt-1">Web Dev</div>
+            </div>
+            <ul class="text-xl leading-relaxed">
+                <li class="mb-2">💻 HTML / CSS 搞起</li>
+                <li class="mb-2">🎮 克隆 "2048" 游戏</li>
+                <li>🚀 部署上线！(Deploy)</li>
+            </ul>
+            <div class="absolute -top-6 -right-2 text-4xl text-blue-400 transform -rotate-12">
+                <i class="fa-solid fa-globe"></i>
+            </div>
+        </div>
+
+        <svg class="connector" width="100" height="200" style="top: 260px; left: 550px;">
+            <path d="M40,10 Q80,100 20,180" />
+            <path d="M30,170 L20,180 L10,170" stroke-width="2" />
+        </svg>
+
+        <div class="doodle-box shape-3 absolute top-[400px] left-[380px] w-[300px] p-6 bg-white rotate-[-1deg] z-10">
+            <div class="tape" style="left: auto; right: 30%; background: rgba(255,200,200,0.5);"></div>
+            <div class="text-center mb-3">
+                <span class="font-bold text-2xl highlight highlight-green">3. 框架工匠</span>
+                <div class="text-sm text-gray-500 mt-1">React / Node.js</div>
+            </div>
+            <div class="text-lg">
+                <p class="mb-2">"不再手写原生JS"</p>
+                <div class="bg-gray-100 p-2 rounded-lg border-2 border-dashed border-gray-300 transform rotate-1">
+                    <i class="fa-solid fa-layer-group text-green-500"></i> 管理复杂状态<br>
+                    <i class="fa-solid fa-users text-green-500"></i> 多人在线策略
+                </div>
+            </div>
+        </div>
+
+        <svg class="connector" width="200" height="100" style="top: 450px; left: 680px;">
+            <path d="M10,50 Q100,100 180,50" />
+            <path d="M170,40 L180,50 L170,60" stroke-width="2" />
+        </svg>
+
+        <div class="doodle-box shape-1 absolute top-[280px] right-[80px] w-[260px] p-6 bg-marker-pink/20 rotate-[4deg]">
+            <div class="text-center mb-3">
+                <span class="font-bold text-2xl highlight highlight-pink">4. 开源贡献者</span>
+                <div class="text-sm text-gray-500 mt-1">The Pro League</div>
+            </div>
+            <ul class="text-xl leading-relaxed">
+                <li><i class="fa-brands fa-git-alt text-red-500"></i> Git 工作流</li>
+                <li>🛠️ 提交 PR 修复Bug</li>
+                <li class="font-bold text-red-800">✨ 简历上的金字招牌</li>
+            </ul>
+            <div class="absolute -bottom-5 -right-5 bg-yellow-300 text-ink font-bold px-3 py-1 transform rotate-[-10deg] shadow-md border-2 border-ink rounded-lg">
+                HIRED!
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 right-1/2 transform translate-x-1/2 w-[400px] text-center">
+            <p class="font-hand text-3xl font-bold text-ink" style="text-shadow: 2px 2px 0px #fff;">
+                "这不是游戏，是以代码为武器的冒险！"
+                <br>
+                <i class="fa-solid fa-arrow-up text-2xl mt-2 animate-bounce"></i>
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

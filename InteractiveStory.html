@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat Ecosystem - Immersive Story</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: '#A855F7', // Purple
+                        dark: '#0f172a',  // Slate 900
+                        surface: '#1e293b', // Slate 800
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Poppins"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+            margin: 0;
+            /* 隐藏默认滚动条，使用自定义样式或保持沉浸感 */
+            scrollbar-width: thin;
+            scrollbar-color: #A855F7 #0f172a;
+        }
+
+        /* 限制最大宽度并居中，模拟画板 */
+        .stage-container {
+            width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            background-color: #0f172a;
+            box-shadow: 0 0 100px rgba(0,0,0,0.5);
+        }
+
+        /* 动画基础类 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 延时控制 */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* 光晕背景 */
+        .glow-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 玻璃拟态卡片 */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #A855F7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stage-container">
+        
+        <div class="fixed top-0 left-0 h-1 bg-theme z-50 transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+
+        <section class="h-screen flex flex-col justify-center items-center relative overflow-hidden px-20">
+            <div class="glow-orb top-[-100px] left-[-100px]"></div>
+            
+            <div class="z-10 text-center reveal active">
+                <span class="text-theme font-display tracking-[0.3em] text-sm uppercase mb-4 block animate-pulse">Ecosystem</span>
+                <h1 class="font-display text-7xl font-extrabold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-500">
+                    超越学习平台
+                </h1>
+                <h2 class="font-sans text-2xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
+                    当数百万成年学习者汇聚，CodeCombat已演变为一个独特的<span class="text-white border-b border-theme">科技人才生态圈</span>。
+                </h2>
+            </div>
+            
+            <div class="absolute bottom-10 animate-bounce text-gray-500">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <section class="relative min-h-[250vh] flex px-20 py-20">
+            <div class="glow-orb top-[20%] right-[-200px] opacity-50"></div>
+
+            <div class="w-1/3 relative">
+                <div class="sticky top-32 reveal">
+                    <h2 class="font-display text-5xl font-bold text-white mb-6 leading-tight">
+                        活跃的<br>
+                        <span class="text-theme">开发者社区</span>
+                    </h2>
+                    <p class="font-sans text-gray-400 text-lg">
+                        不仅仅是写代码，而是关于竞争、审查与创造。
+                    </p>
+                    <div class="mt-10 w-16 h-1 bg-theme rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="w-2/3 pl-16 flex flex-col gap-[40vh] pt-[10vh] pb-[20vh]">
+                
+                <div class="glass-card p-10 rounded-2xl shadow-2xl reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fa-solid fa-trophy text-3xl text-yellow-500"></i>
+                        <h3 class="font-display text-2xl font-bold text-white">全球排名与竞赛</h3>
+                    </div>
+                    <p class="font-sans text-gray-300 leading-relaxed">
+                        在月度编程竞技场中，与全球同行一较高下。你的排名和解决方案是公开的<strong class="text-white">技术名片</strong>。
+                    </p>
+                </div>
+
+                <div class="glass-card p-10 rounded-2xl shadow-2xl reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fa-solid fa-code-compare text-3xl text-blue-400"></i>
+                        <h3 class="font-display text-2xl font-bold text-white">代码审查文化</h3>
+                    </div>
+                    <p class="font-sans text-gray-300 leading-relaxed">
+                        深度讨论区堪比高级 Code Review。围绕算法效率、设计模式展开的每一次对话，都在提升你的工程素养。
+                    </p>
+                </div>
+
+                <div class="glass-card p-10 rounded-2xl shadow-2xl reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fa-solid fa-cubes-stacked text-3xl text-green-400"></i>
+                        <h3 class="font-display text-2xl font-bold text-white">用户生成内容 (UGC)</h3>
+                    </div>
+                    <p class="font-sans text-gray-300 leading-relaxed">
+                        一个自我生长的内容宇宙。资深玩家利用编辑器创作了成千上万个挑战，从机器学习算法到区块链模拟，应有尽有。
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="min-h-screen px-20 py-32 bg-gradient-to-b from-dark to-black relative">
+             <div class="text-center mb-24 reveal">
+                <h2 class="font-display text-4xl font-bold text-white mb-2">直通职场的<span class="text-theme">技能认证</span></h2>
+                <p class="font-sans text-gray-500">REAL SKILLS. REAL OPPORTUNITIES.</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-8">
+                <div class="bg-surface/50 p-8 rounded-xl border border-white/5 hover:border-theme/50 transition-colors duration-500 reveal delay-100 group">
+                    <div class="w-14 h-14 bg-theme/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-certificate text-2xl text-theme"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-3">技能徽章</h3>
+                    <p class="font-sans text-sm text-gray-400 leading-relaxed">
+                        完成特定路径（如“全栈JavaScript开发者”）后，获得可验证的链上技能徽章，直接嵌入 LinkedIn。
+                    </p>
+                </div>
+
+                <div class="bg-surface/50 p-8 rounded-xl border border-white/5 hover:border-theme/50 transition-colors duration-500 reveal delay-200 group">
+                    <div class="w-14 h-14 bg-theme/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-briefcase text-2xl text-theme"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-3">合作企业项目</h3>
+                    <p class="font-sans text-sm text-gray-400 leading-relaxed">
+                        解决科技公司发布的真实业务问题（如API设计）。优秀的解决方案可能直接获得面试机会。
+                    </p>
+                </div>
+
+                <div class="bg-surface/50 p-8 rounded-xl border border-white/5 hover:border-theme/50 transition-colors duration-500 reveal delay-300 group">
+                    <div class="w-14 h-14 bg-theme/20 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-user-astronaut text-2xl text-theme"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-3">精英人才库</h3>
+                    <p class="font-sans text-sm text-gray-400 leading-relaxed">
+                        授权企业直接筛选并联系在游戏AI、性能优化等领域表现顶尖的玩家。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="h-screen flex flex-col justify-center items-center relative overflow-hidden bg-black text-center px-20">
+            <div class="absolute w-[800px] h-[800px] border-[1px] border-theme/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
+            <div class="absolute w-[600px] h-[600px] border-[1px] border-theme/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+            
+            <div class="z-10 reveal">
+                <p class="font-sans text-gray-400 text-lg mb-8 tracking-widest uppercase">The Career Loop</p>
+                <div class="flex items-center gap-6 md:gap-12 font-display text-3xl md:text-5xl font-bold text-white/90">
+                    <span class="hover:text-theme transition-colors cursor-default">学习</span>
+                    <i class="fa-solid fa-arrow-right text-theme/50 text-2xl"></i>
+                    <span class="hover:text-theme transition-colors cursor-default">实践</span>
+                    <i class="fa-solid fa-arrow-right text-theme/50 text-2xl"></i>
+                    <span class="hover:text-theme transition-colors cursor-default">证明</span>
+                    <i class="fa-solid fa-arrow-right text-theme/50 text-2xl"></i>
+                    <span class="hover:text-theme transition-colors cursor-default">连接</span>
+                </div>
+                
+                <div class="mt-16">
+                    <button class="bg-theme text-white font-display font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_50px_rgba(168,85,247,0.8)] hover:-translate-y-1 transition-all duration-300">
+                        加入生态圈 <i class="fa-solid fa-rocket ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-8 text-center text-gray-600 text-sm font-sans border-t border-white/5 bg-black">
+            &copy; 2025 CodeCombat. All rights reserved. Designed for Immersive Experience.
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. 元素进入视口触发动画
+            const observerOptions = {
+                threshold: 0.15, // 元素出现15%时触发
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+
+            // 2. 顶部进度条更新
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                document.getElementById('progress-bar').style.width = scrollPercentage + '%';
+            });
+        });
+    </script>
+</body>
+</html>

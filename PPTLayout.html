@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat Roadmap 2025 - Presentation</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#00B894',
+                        dark: '#2d3436',
+                        light: '#dfe6e9',
+                        bg: '#f9fbfd'
+                    },
+                    fontFamily: {
+                        sans: ['"Open Sans"', 'sans-serif'],
+                        display: ['"Montserrat"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'slide': '0 20px 50px -12px rgba(0, 0, 0, 0.1)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            overflow: hidden; /* 防止浏览器默认滚动 */
+        }
+
+        .swiper {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .swiper-slide {
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 模拟PPT的 16:9 安全区域，但适配全屏 */
+        .slide-content {
+            width: 90%;
+            max-width: 1400px;
+            height: 85%;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 自定义 Swiper 导航按钮颜色 */
+        :root {
+            --swiper-theme-color: #00B894;
+            --swiper-navigation-size: 30px;
+        }
+        
+        .swiper-button-next, .swiper-button-prev {
+            color: #00B894;
+            background: rgba(255,255,255,0.8);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background: #00B894;
+            color: white;
+        }
+
+        /* 装饰背景图形 */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.05;
+        }
+
+        /* 列表图标对齐修正 */
+        .list-icon {
+            min-width: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+                <div class="bg-shape bg-brand w-[800px] h-[800px] -top-40 -right-40"></div>
+                <div class="bg-shape bg-dark w-[400px] h-[400px] bottom-0 left-0"></div>
+                
+                <div class="slide-content flex flex-col justify-center items-start pl-20 border-l-8 border-brand">
+                    <div class="text-brand font-bold tracking-[0.4em] uppercase mb-4 animate-fade-in-up">CodeCombat Roadmap</div>
+                    <h1 class="font-display text-7xl font-black text-dark leading-tight mb-6">
+                        从零到开发者<br>
+                        <span class="text-brand">进阶蓝图</span>
+                    </h1>
+                    <p class="font-sans text-2xl text-gray-500 max-w-2xl mb-10 font-light">
+                        将游戏关卡转化为扎实的工程能力。一条清晰、可追踪的成人学习路径。
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <span class="px-6 py-2 bg-dark text-white font-bold rounded-full">2025 Edition</span>
+                        <span class="text-gray-400 font-display font-bold">BY CODECOMBAT</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="absolute top-0 right-0 p-8 text-6xl font-black text-gray-100 font-display select-none">01</div>
+                <div class="slide-content">
+                    <div class="border-b-2 border-gray-100 pb-4 flex justify-between items-end">
+                        <div>
+                            <h2 class="font-display text-4xl font-bold text-dark">第一阶段：语法学徒</h2>
+                            <p class="text-gray-400 font-medium mt-1">Python / JavaScript 基础构建</p>
+                        </div>
+                        <i class="fa-solid fa-scroll text-brand text-3xl"></i>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-12 items-center h-full">
+                        <div class="col-span-4 flex justify-center">
+                            <div class="w-64 h-64 bg-green-50 rounded-full flex items-center justify-center relative">
+                                <div class="absolute inset-0 border-4 border-dashed border-brand/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                                <i class="fa-brands fa-python text-8xl text-brand"></i>
+                            </div>
+                        </div>
+                        <div class="col-span-8 grid gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-brand">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-bullseye text-brand list-icon"></i> 核心</h3>
+                                <p class="text-gray-600">在游戏关卡中掌握变量、循环、函数、条件判断等核心语法。</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-gray-300">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-code text-gray-400 list-icon"></i> 项目</h3>
+                                <p class="text-gray-600">编写算法控制英雄移动、攻击、收集资源。</p>
+                            </div>
+                            <div class="bg-gray-800 text-white p-6 rounded-xl shadow-card">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-flag text-brand list-icon"></i> 目标</h3>
+                                <p class="text-gray-300">建立坚实的编程直觉，能独立解决数百个微型逻辑问题。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="absolute top-0 right-0 p-8 text-6xl font-black text-gray-100 font-display select-none">02</div>
+                <div class="slide-content">
+                    <div class="border-b-2 border-gray-100 pb-4 flex justify-between items-end">
+                        <div>
+                            <h2 class="font-display text-4xl font-bold text-dark">第二阶段：全栈见习生</h2>
+                            <p class="text-gray-400 font-medium mt-1">Web 开发实战</p>
+                        </div>
+                        <i class="fa-solid fa-globe text-brand text-3xl"></i>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-12 items-center h-full">
+                        <div class="col-span-4 flex justify-center">
+                            <div class="w-64 h-64 bg-blue-50 rounded-full flex items-center justify-center relative">
+                                <i class="fa-solid fa-layer-group text-8xl text-brand"></i>
+                                <div class="absolute bottom-4 bg-white px-4 py-1 rounded shadow text-xs font-bold text-dark">HTML / CSS</div>
+                            </div>
+                        </div>
+                        <div class="col-span-8 grid gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-brand">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-bullseye text-brand list-icon"></i> 核心</h3>
+                                <p class="text-gray-600">学习HTML/CSS，并运用Python/JavaScript开发交互式网页游戏。</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-gray-300">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-gamepad text-gray-400 list-icon"></i> 项目</h3>
+                                <p class="text-gray-600">构建自己的“克隆”版经典游戏（如2048、贪吃蛇），并部署上线。</p>
+                            </div>
+                            <div class="bg-gray-800 text-white p-6 rounded-xl shadow-card">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-flag text-brand list-icon"></i> 目标</h3>
+                                <p class="text-gray-300">理解前端与后端的基础交互，形成完整的“产品”开发视角。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="absolute top-0 right-0 p-8 text-6xl font-black text-gray-100 font-display select-none">03</div>
+                <div class="slide-content">
+                    <div class="border-b-2 border-gray-100 pb-4 flex justify-between items-end">
+                        <div>
+                            <h2 class="font-display text-4xl font-bold text-dark">第三阶段：框架工匠</h2>
+                            <p class="text-gray-400 font-medium mt-1">React, Node.js 与工程化</p>
+                        </div>
+                        <i class="fa-solid fa-toolbox text-brand text-3xl"></i>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-12 items-center h-full">
+                        <div class="col-span-4 flex justify-center">
+                            <div class="w-64 h-64 bg-orange-50 rounded-full flex items-center justify-center relative">
+                                <i class="fa-brands fa-react text-8xl text-brand animate-[spin_20s_linear_infinite]"></i>
+                            </div>
+                        </div>
+                        <div class="col-span-8 grid gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-brand">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-bullseye text-brand list-icon"></i> 核心</h3>
+                                <p class="text-gray-600">在更复杂的游戏项目中，引入主流框架和工具链，管理复杂状态和组件。</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-gray-300">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-network-wired text-gray-400 list-icon"></i> 项目</h3>
+                                <p class="text-gray-600">开发多人在线策略游戏的界面或后台服务模块。</p>
+                            </div>
+                            <div class="bg-gray-800 text-white p-6 rounded-xl shadow-card">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-flag text-brand list-icon"></i> 目标</h3>
+                                <p class="text-gray-300">体验现代化、工程化的协作开发流程，为真实工作环境做好准备。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="absolute top-0 right-0 p-8 text-6xl font-black text-gray-100 font-display select-none">04</div>
+                <div class="slide-content">
+                    <div class="border-b-2 border-gray-100 pb-4 flex justify-between items-end">
+                        <div>
+                            <h2 class="font-display text-4xl font-bold text-dark">第四阶段：开源贡献者</h2>
+                            <p class="text-gray-400 font-medium mt-1">Open Source Workflow</p>
+                        </div>
+                        <i class="fa-brands fa-git-alt text-brand text-3xl"></i>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-12 items-center h-full">
+                        <div class="col-span-4 flex justify-center">
+                            <div class="w-64 h-64 bg-gray-100 rounded-full flex items-center justify-center relative">
+                                <i class="fa-brands fa-github text-8xl text-gray-700"></i>
+                            </div>
+                        </div>
+                        <div class="col-span-8 grid gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-brand">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-bullseye text-brand list-icon"></i> 核心</h3>
+                                <p class="text-gray-600">深入学习Git与开源工作流，直接为CodeCombat的游戏引擎或关卡库提交代码。</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-card border-l-4 border-gray-300">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-code-branch text-gray-400 list-icon"></i> 项目</h3>
+                                <p class="text-gray-600">修复Bug、设计新关卡、开发新功能。</p>
+                            </div>
+                            <div class="bg-gray-800 text-white p-6 rounded-xl shadow-card">
+                                <h3 class="font-display font-bold text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-flag text-brand list-icon"></i> 目标</h3>
+                                <p class="text-gray-300">构建你的可验证贡献记录，这是你技术简历上最闪亮的一笔。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide bg-brand">
+                <div class="bg-shape bg-white w-[1200px] h-[1200px] -right-40 opacity-10"></div>
+                
+                <div class="slide-content flex flex-col justify-center items-center text-center">
+                    <div class="mb-8">
+                        <i class="fa-solid fa-laptop-code text-6xl text-white mb-4 block"></i>
+                        <h2 class="font-display text-5xl font-black text-white leading-tight">
+                            每一步，你都在编写真实的代码。
+                        </h2>
+                    </div>
+                    <div class="w-24 h-1 bg-white mb-8 opacity-50"></div>
+                    <p class="font-sans text-2xl text-white font-medium mb-12">
+                        构建真实的项目，从今天开始。
+                    </p>
+                    <button class="bg-white text-brand font-display font-bold text-xl px-12 py-4 rounded shadow-lg hover:scale-105 transition-transform">
+                        Start Now
+                    </button>
+                    <p class="absolute bottom-0 text-white/50 text-sm font-sans">© 2025 CodeCombat Presentation</p>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            direction: "horizontal",
+            loop: false,
+            effect: "slide",
+            speed: 600,
+            keyboard: {
+                enabled: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+                dynamicBullets: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            mousewheel: true, // 允许鼠标滚动切换
+        });
+    </script>
+</body>
+</html>

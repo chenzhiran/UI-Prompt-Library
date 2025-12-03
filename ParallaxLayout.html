@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Deep Dive: CodeCombat Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: '#06B6D4', // Cyan 500
+                        dark: '#020617',  // Slate 950
+                    },
+                    fontFamily: {
+                        sans: ['"Manrope"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020617;
+            color: #ffffff;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 隐藏默认滚动条，自定义样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06B6D4;
+        }
+
+        /* 视差容器设置 */
+        .parallax-element {
+            will-change: transform;
+            position: absolute;
+            pointer-events: none; /* 确保不阻挡点击 */
+        }
+
+        /* 玻璃拟态卡片 */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 霓虹发光文字 */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        /* 装饰性网格背景 */
+        .grid-bg {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* 出现动画 */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .reveal-text.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <div class="fixed inset-0 w-full h-full z-0 overflow-hidden">
+        <div class="parallax-element w-[800px] h-[800px] rounded-full bg-theme opacity-[0.08] blur-[100px] top-[-200px] left-[-200px]" data-speed="0.1"></div>
+        <div class="parallax-element w-[600px] h-[600px] rounded-full bg-purple-600 opacity-[0.05] blur-[80px] bottom-[-100px] right-[-100px]" data-speed="0.15"></div>
+        <div class="absolute inset-0 grid-bg opacity-30"></div>
+    </div>
+
+    <div class="fixed inset-0 w-full h-full z-20 pointer-events-none overflow-hidden">
+        <div class="parallax-element top-[20%] right-[10%] font-mono text-xs text-theme opacity-30 bg-black/50 p-4 rounded border border-theme/20" data-speed="1.5">
+            <div>while(true) {</div>
+            <div class="pl-4">hero.attack(enemy);</div>
+            <div class="pl-4">check(performance);</div>
+            <div>}</div>
+        </div>
+        
+        <div class="parallax-element top-[40%] left-[5%] w-24 h-24 border border-gray-700 opacity-20 rotate-45" data-speed="2.0"></div>
+        <div class="parallax-element top-[70%] right-[15%] w-16 h-16 border-2 border-theme opacity-10 rounded-full" data-speed="2.5"></div>
+        
+        <div class="parallax-element top-[60%] left-[8%] font-mono text-xs text-purple-400 opacity-20" data-speed="1.2">
+            &lt;DockerContainer id="session_99" /&gt;
+        </div>
+    </div>
+
+    <main class="relative z-10 w-full max-w-6xl mx-auto px-6 pb-40">
+        
+        <section class="h-screen flex flex-col justify-center items-start relative">
+            <div class="reveal-text">
+                <span class="inline-block py-1 px-3 border border-theme text-theme text-sm font-mono mb-6 tracking-widest uppercase bg-theme/10 backdrop-blur-md">Architecture Analysis</span>
+                <h1 class="text-7xl md:text-9xl font-extrabold leading-none tracking-tighter mb-4">
+                    技术<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">深潜</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl text-theme font-light max-w-2xl mt-4 text-glow">
+                    CodeCombat 如何用 AI 与游戏化重构编程教育
+                </h2>
+                <div class="mt-20 flex items-center gap-4 text-gray-500 text-sm animate-bounce">
+                    <span class="uppercase tracking-widest">Scroll to dive</span>
+                    <i class="fa-solid fa-arrow-down text-theme"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-[80vh] flex items-center justify-end py-20 relative">
+            <div class="absolute left-0 top-1/2 -translate-y-1/2 parallax-element opacity-10 text-[200px] font-bold text-white pointer-events-none" data-speed="0.5">01</div>
+            
+            <div class="w-full md:w-2/3 glass-card p-10 md:p-16 rounded-sm border-l-4 border-theme reveal-text">
+                <div class="flex items-center gap-4 mb-6">
+                    <i class="fa-brands fa-docker text-4xl text-theme"></i>
+                    <h3 class="text-3xl font-bold">实时代码执行沙盒</h3>
+                </div>
+                <div class="space-y-6 text-lg text-gray-300">
+                    <div>
+                        <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-microchip text-sm text-theme"></i> 架构
+                        </h4>
+                        <p>基于 Docker 容器集群，为每个用户会话创建隔离的轻量级运行环境。代码在<span class="text-white font-mono bg-white/10 px-1">毫秒级</span>内被执行并返回结果。</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-xl mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-scale-balanced text-sm text-theme"></i> 挑战与方案
+                        </h4>
+                        <p>通过自研的智能资源调度算法，预测关卡负载，动态分配容器，完美平衡海量并发下的延迟与效率。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-[80vh] flex items-center justify-start py-20 relative">
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 parallax-element opacity-10 text-[200px] font-bold text-white pointer-events-none" data-speed="0.4">02</div>
+            
+            <div class="w-full md:w-2/3 glass-card p-10 md:p-16 rounded-sm border-r-4 border-purple-500 reveal-text">
+                <div class="flex items-center gap-4 mb-6">
+                    <i class="fa-solid fa-brain text-4xl text-purple-500"></i>
+                    <h3 class="text-3xl font-bold">AI 驱动的个性化路径</h3>
+                </div>
+                <div class="space-y-6 text-lg text-gray-300">
+                    <p class="leading-relaxed">
+                        采用<strong class="text-purple-400">多臂老虎机与上下文 Bandit 算法</strong>。系统实时分析你的每一次代码修改轨迹与错误类型，动态调整后续关卡难度。
+                    </p>
+                    <div class="bg-black/40 p-4 rounded font-mono text-sm border border-purple-500/30">
+                        Input: { attempt_history, error_type, dwell_time }<br>
+                        Output: Generate_Level_Variant()
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-[80vh] flex items-center justify-center py-20 relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 parallax-element w-px h-full bg-gradient-to-b from-transparent via-theme to-transparent opacity-50" data-speed="0.8"></div>
+            
+            <div class="w-full md:w-3/4 glass-card p-12 relative overflow-hidden reveal-text">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-theme opacity-10 blur-3xl rounded-full"></div>
+
+                <div class="text-center mb-10">
+                    <div class="text-6xl font-black text-white/5 absolute top-4 left-4">03</div>
+                    <h3 class="text-4xl font-bold mb-2">游戏状态与代码映射层</h3>
+                    <p class="text-theme font-mono text-sm">THE CORE PATENTED TECHNOLOGY</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div class="text-right space-y-2">
+                        <div class="font-mono text-xl text-white">hero.moveRight()</div>
+                        <div class="text-sm text-gray-500">抽象代码指令</div>
+                    </div>
+                    
+                    <div class="flex justify-center text-2xl text-theme">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </div>
+
+                    <div class="text-left space-y-2">
+                        <div class="font-mono text-xl text-white">Event: {x: +10, anim: 'run'}</div>
+                        <div class="text-sm text-gray-500">游戏实体事件</div>
+                    </div>
+                </div>
+                
+                <p class="mt-8 text-center text-gray-300 max-w-lg mx-auto">
+                    精心设计的“游戏语义层”API，将代码无歧义地翻译成引擎可理解的复杂状态变化。
+                </p>
+            </div>
+        </section>
+
+        <section class="min-h-[80vh] flex items-center justify-end py-20 relative">
+            <div class="absolute left-10 bottom-20 parallax-element opacity-10 text-[200px] font-bold text-white pointer-events-none" data-speed="0.6">04</div>
+            
+            <div class="w-full md:w-2/3 glass-card p-10 md:p-16 rounded-sm border-b-4 border-green-400 reveal-text">
+                <div class="flex items-center gap-4 mb-6">
+                    <i class="fa-solid fa-chart-radar text-4xl text-green-400"></i>
+                    <h3 class="text-3xl font-bold">基于项目的技能评估</h3>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="flex-1 text-lg text-gray-300">
+                        <p class="mb-4">
+                            超越简单的语法正确性检查。系统通过静态分析与动态测试，评估代码的<span class="text-white">可读性、效率及设计模式</span>。
+                        </p>
+                        <p>最终生成的技能雷达图，清晰展示你在算法思维与系统设计上的长板与短板。</p>
+                    </div>
+                    <div class="flex-shrink-0 w-32 h-32 border border-green-400/30 rounded-full flex items-center justify-center relative">
+                        <div class="absolute inset-0 border border-white/10 rounded-full scale-75"></div>
+                        <div class="absolute inset-0 border border-white/10 rounded-full scale-50"></div>
+                        <div class="w-20 h-20 bg-green-400/20 clip-polygon" style="clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="h-[50vh] flex flex-col justify-center items-center text-center relative mt-20">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 reveal-text">
+                定义编程教育的<br>
+                <span class="text-theme">未来形态</span>
+            </h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-transparent via-theme to-transparent mb-8"></div>
+            <button class="px-8 py-3 border border-white/20 hover:border-theme hover:text-theme hover:bg-theme/10 transition-all duration-300 rounded font-mono text-sm uppercase tracking-widest reveal-text">
+                Start Coding
+            </button>
+            
+            <p class="absolute bottom-10 text-xs text-gray-600 font-mono">
+                HTML GENERATED BY DYNAMIC VISUAL ARTIST AI
+            </p>
+        </section>
+
+    </main>
+
+    <script>
+        // 核心视差逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const parallaxElements = document.querySelectorAll('.parallax-element');
+            const revealElements = document.querySelectorAll('.reveal-text');
+            
+            // 1. 视差滚动计算
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+
+                parallaxElements.forEach(el => {
+                    const speed = el.getAttribute('data-speed');
+                    // Y轴移动 = 滚动距离 * 速度因子
+                    // 速度 > 1 为前景（移动更快），速度 < 1 为背景（移动更慢）
+                    const yPos = -(scrolled * speed * 0.2); 
+                    el.style.transform = `translateY(${yPos}px)`;
+                });
+            });
+
+            // 2. 简单的 Intersection Observer 用于文字出现动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

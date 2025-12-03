@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCombat Ecosystem - Swiss Grid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            DEFAULT: '#4338ca', // Indigo 700
+                            light: '#e0e7ff',   // Indigo 100
+                            lighter: '#eef2ff', // Indigo 50
+                            dark: '#312e81',    // Indigo 900
+                        },
+                        neutral: {
+                            100: '#f5f5f5',
+                            900: '#111111',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    spacing: {
+                        'gutter': '24px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #e5e5e5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px;
+        }
+
+        /* 画布 */
+        #swiss-canvas {
+            width: 1200px;
+            height: 1400px;
+            background-color: #ffffff;
+            position: relative;
+            /* 模拟印刷品的裁切感 */
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.05); 
+            padding: 48px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 12列网格辅助线 (仅开发时可视，此处隐藏但保留逻辑) */
+        .grid-system {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            height: 100%;
+            align-content: start;
+        }
+
+        /* 瑞士风格排版细节 */
+        h1, h2, h3, h4 {
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .module {
+            padding: 24px;
+            display: flex;
+            flex-col: column;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+
+        /* 极细分割线 */
+        .hairline {
+            height: 1px;
+            background-color: #111;
+            width: 100%;
+        }
+
+        /* 装饰性矩形 */
+        .swiss-box {
+            width: 100%;
+            height: 12px;
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="swiss-canvas">
+        
+        <div class="grid-system">
+
+            <div class="col-span-8 flex flex-col justify-between h-48 border-t-8 border-theme pt-6">
+                <div>
+                    <span class="font-bold text-xs tracking-[0.3em] text-theme mb-2 block">SYSTEM_OVERVIEW</span>
+                    <h1 class="text-6xl font-black text-neutral-900 leading-[0.9]">
+                        CODECOMBAT<br>
+                        ECOSYSTEM
+                    </h1>
+                </div>
+            </div>
+            
+            <div class="col-span-4 flex flex-col justify-end pb-2">
+                <div class="bg-neutral-100 p-6 h-full flex flex-col justify-between">
+                    <div class="swiss-box w-1/4"></div>
+                    <p class="text-sm font-medium leading-relaxed text-neutral-900 text-justify">
+                        当数百万成年学习者汇聚，CodeCombat已演变为一个独特的科技人才生态圈。<br><br>
+                        <strong>超越学习平台，构建职业桥梁。</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-span-12 h-12 flex items-center">
+                <div class="hairline"></div>
+            </div>
+
+
+            <div class="col-span-3">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="text-4xl font-bold text-theme opacity-30">01</span>
+                    <h2 class="text-xl font-bold">开发者社区</h2>
+                </div>
+                <p class="text-xs text-gray-500 max-w-[150px]">
+                    ACTIVE DEVELOPER COMMUNITY & INTERACTION
+                </p>
+            </div>
+
+            <div class="col-span-3 module bg-theme text-white">
+                <div class="mb-8">
+                    <div class="w-8 h-8 border-2 border-white rounded-full flex items-center justify-center mb-4 text-sm font-bold">A</div>
+                    <h3 class="text-lg font-bold">全球排名<br>& 竞赛</h3>
+                </div>
+                <p class="text-xs opacity-80 leading-relaxed">
+                    在月度编程竞技场中与同行一较高下。排名与解决方案是公开的技术名片。
+                </p>
+            </div>
+
+            <div class="col-span-3 module bg-theme-lighter text-theme-dark border border-theme-light">
+                <div class="mb-8">
+                    <div class="w-8 h-8 border-2 border-theme-dark rounded-full flex items-center justify-center mb-4 text-sm font-bold">B</div>
+                    <h3 class="text-lg font-bold">代码审查<br>文化</h3>
+                </div>
+                <p class="text-xs font-medium leading-relaxed">
+                    关于算法效率、风格和模式的深度交流。堪比高级 Code Review。
+                </p>
+            </div>
+
+            <div class="col-span-3 module border border-neutral-200">
+                <div class="mb-8">
+                    <div class="w-8 h-8 bg-neutral-900 text-white rounded-full flex items-center justify-center mb-4 text-sm font-bold">C</div>
+                    <h3 class="text-lg font-bold">用户生成<br>内容</h3>
+                </div>
+                <p class="text-xs text-neutral-600 leading-relaxed">
+                    使用编辑器创作数千个自定义挑战。从机器学习到区块链的自我生长宇宙。
+                </p>
+            </div>
+
+
+            <div class="col-span-12 h-12 flex items-center">
+                <div class="hairline"></div>
+            </div>
+
+
+            <div class="col-span-3">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="text-4xl font-bold text-theme opacity-30">02</span>
+                    <h2 class="text-xl font-bold">技能认证</h2>
+                </div>
+                <p class="text-xs text-gray-500 max-w-[150px]">
+                    CAREER BRIDGE & SKILL VERIFICATION
+                </p>
+            </div>
+
+            <div class="col-span-3 module border-t-4 border-theme bg-neutral-100">
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold">技能徽章</h3>
+                </div>
+                <p class="text-xs text-neutral-600 leading-relaxed mb-2">
+                    完成特定路径（如全栈JS），获得可验证的链上徽章。
+                </p>
+                <div class="w-full h-1 bg-theme opacity-20"></div>
+                <p class="text-[10px] font-bold mt-2 text-theme">LINKEDIN READY</p>
+            </div>
+
+            <div class="col-span-3 module border-t-4 border-theme bg-neutral-100">
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold">企业项目</h3>
+                </div>
+                <p class="text-xs text-neutral-600 leading-relaxed mb-2">
+                    解决真实的、轻度化的业务问题（API/数据清洗）。
+                </p>
+                <div class="w-full h-1 bg-theme opacity-20"></div>
+                <p class="text-[10px] font-bold mt-2 text-theme">REAL WORLD</p>
+            </div>
+
+            <div class="col-span-3 module border-t-4 border-theme bg-neutral-100">
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold">精英人才库</h3>
+                </div>
+                <p class="text-xs text-neutral-600 leading-relaxed mb-2">
+                    授权企业直接筛选并联系游戏AI、性能优化领域的顶尖玩家。
+                </p>
+                <div class="w-full h-1 bg-theme opacity-20"></div>
+                <p class="text-[10px] font-bold mt-2 text-theme">DIRECT HIRE</p>
+            </div>
+
+
+            <div class="col-span-12 mt-auto pt-12">
+                <div class="bg-theme text-white p-12 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-bold tracking-[0.2em] opacity-60 block mb-2">THE LOOP CONCEPT</span>
+                        <div class="text-4xl font-black tracking-tight flex gap-8">
+                            <span>LEARN.</span>
+                            <span class="text-theme-light">PRACTICE.</span>
+                            <span class="opacity-50">PROVE.</span>
+                            <span class="opacity-30">CONNECT.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2 w-16 h-16">
+                        <div class="bg-white"></div>
+                        <div class="bg-theme-light"></div>
+                        <div class="bg-theme-dark"></div>
+                        <div class="bg-white opacity-50"></div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between mt-4 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
+                    <span>Swiss Style Generator</span>
+                    <span>Designed for Logic</span>
+                    <span>CodeCombat © 2024</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

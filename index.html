@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给大福姐准备的信息图提示词们</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // 修改为新的绿色主色调，接近图片中的颜色，并保持专业感
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981', // 主色 (Emerald 500)
+                            600: '#059669', // 悬停/强调色 (Emerald 600)
+                            900: '#064e3b',
+                        },
+                        ui: {
+                            bg: '#f8fafc', // Slate 50
+                            card: '#ffffff',
+                            border: '#e2e8f0',
+                            text: '#334155',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        serif: ['"Noto Serif SC"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* 隐藏滚动条但允许滚动 */
+        .prompt-text::-webkit-scrollbar {
+            width: 4px;
+        }
+        .prompt-text::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-20 font-sans">
+
+    <header class="bg-white border-b border-ui-border sticky top-0 z-50 bg-opacity-90 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold shadow-sm">
+                    AI
+                </div>
+                <h1 class="text-xl font-bold text-slate-800 tracking-tight">给大福姐准备的信息图提示词们</h1>
+            </div>
+            <a href="#" class="text-sm font-medium text-slate-500 hover:text-brand-600 transition-colors">
+                Design System v1.1
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+        <div class="max-w-3xl mx-auto text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">为您的下一个项目寻找灵感</h2>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                精选不同布局与风格的 AI 提示词库。一键复制，即刻生成高质量的网页界面。
+            </p>
+        </div>
+        
+        <div id="all-prompts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+
+    </main>
+
+    <script>
+        const layouts = [
+            {
+                id: 'magazine',
+                cn: '杂志式布局',
+                en: 'Magazine Layout',
+                file: 'MagazineLayout.html',
+                prompt: `你是一位世界顶尖的杂志视觉总监，擅长创造信息饱和、极具视觉冲击力的“数字印刷品”。请严格遵循以下要求，为提供的“{内容}”生成一个独立的HTML页面。
+核心要求：整个设计必须贯彻“饱和感”哲学，用紧凑的布局和突出的字体取代不必要的留白。严格使用非对称网格，并确保强烈的视觉对比。
+布局与结构：页面必须按顺序包含以下四个部分，不可缺失：
+页头：顶部居左设置“刊头”，包含主标题和发布日期。
+主内容区：必须采用4+8的非对称网格。左侧4列为视觉锚点区，放置一个巨大的描边空心字母或数字（例如提取标题首字母）。右侧8列为核心信息区，将内容分解为多个紧凑的卡片或列表进行展示。
+中段分隔区：在页面中下部插入一个全宽区域，使用不同的背景色（如浅灰色），用于展示一个核心引言、数据或次要列表，以打破阅读节奏。
+深色页脚：页面底部必须使用深色背景（建议#1f2937），用于放置总结性观点或行动号召文本。
+设计规范：
+字体：中文标题与正文全部使用 Noto Serif SC，字重加粗（700），字号需比常规网页更大。英文点缀性文字使用 Poppins，字重较轻（300），字号较小。严格执行“中文大而粗，英文小而精”。
+色彩：主色调为浅色（#f8f9fa背景，#1f2937文字）。选取一个{主题色}，仅用于创建单色透明度渐变，为部分卡片背景或标题底部添加高光，禁止混合多种高亮色。
+视觉元素：仅使用Font Awesome中的线形图标。可加入简洁的勾线风格装饰图形。
+内容与代码：对“{内容}”进行智能分段和提炼，但不得遗漏任何核心要点。生成的HTML需是独立文件，通过CDN引入Tailwind CSS、Google Fonts（Noto Serif SC, Poppins）和Font Awesome。页面固定宽高为1200x1600像素，所有内容必须在此区域内无滚动条完整呈现。`
+            },
+            {
+                id: 'bento',
+                cn: '便当网格布局',
+                en: 'Bento Grid',
+                file: 'BentoGrid.html',
+                prompt: `你是一位崇尚秩序与平衡的UI建筑设计师。请为“{内容}”创建一个采用Bento Grid（便当网格）布局的HTML页面。
+核心要求：布局必须模块化、网格化，由多个大小不一的矩形块紧凑拼合而成，整体在视觉上平衡且充满呼吸感。
+布局与结构：
+使用CSS Grid布局，构建一个至少包含6-9个格子的网格容器。
+格子大小应有明显差异（例如有的格子横跨2行2列，有的仅占1行1列），错落有致。
+最重要的信息应放在最大或视觉优先级最高的格子里。
+设计规范：
+风格：采用现代、洁净的浅色风格，类似Apple或Notion官网。背景色为白色（#ffffff）。
+卡片设计：每个格子视为一个卡片，拥有柔和的阴影（box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1)）、适度的圆角（border-radius: 0.75rem）和细微的内边距。
+字体：标题使用无衬线字体Inter，字重600。正文使用Inter，字重400。数据突出显示可使用Poppins。
+色彩：以黑白灰为主。选取一个{主题色}，仅用于卡片的悬停边框、关键数字或图标着色，保持克制。
+图标：使用Font Awesome或Lucide图标库中的简约线性图标。
+内容与代码：将“{内容}”拆解成多个逻辑独立的要点，并合理地分配至不同的网格格子中。代码需使用Tailwind CSS实现响应式，但初始视图锁定为900x1200像素区域，内容需自适应此区域。`
+            },
+            {
+                id: 'card',
+                cn: '卡片式布局',
+                en: 'Card-Based Layout',
+                file: 'CardLayout.html',
+                prompt: `你是一位注重清晰与可读性的产品设计师。请为“{内容}”设计一个优雅的卡片式布局页面。
+核心要求：所有内容都必须被组织在一系列视觉统一的卡片容器中，卡片排列整齐，导航清晰，易于快速浏览。
+布局与结构：
+使用Flexbox或Grid布局，卡片排列成多行多列，间距均匀。
+顶部可设一个全宽的“英雄”卡片用于展示总标题和概述。
+其余卡片按内容逻辑顺序排列，支持响应式（例如在大屏幕上显示3列，移动端显示1列）。
+设计规范：
+卡片样式：卡片背景为白色（#ffffff），有明确的边框（1px solid #e5e7eb）或柔和的阴影。内部有良好的内边距。
+字体：中文使用HarmonyOS Sans SC，英文使用SF Pro Display（可通过-apple-system系统字体栈实现）。层级分明。
+色彩：浅色主题。{主题色}仅用于卡片悬停时的提升效果（如阴影加深）和链接颜色。
+交互：每个卡片必须有细微的悬停效果（如微微上移、阴影变化）。
+内容与代码：将“{内容}”分段，并为每个段落或要点创建独立的卡片。确保卡片高度可随内容伸缩。使用Tailwind CSS，页面初始尺寸为800x1200像素，但需具备完整的响应式能力。`
+            },
+            {
+                id: 'story',
+                cn: '互动故事布局',
+                en: 'Interactive Storytelling',
+                file: 'InteractiveStory.html',
+                prompt: `你是一位沉浸式体验设计师。请为“{内容}”创作一个通过滚动触发的交互式叙事HTML页面。
+核心要求：页面不应一次性展示所有内容，而应通过用户滚动，以动画和视差效果逐步呈现，引导用户深入探索。
+布局与结构：
+采用全屏滚动式设计，将内容分成多个“场景”或“章节”。
+每个章节占据至少100%的视口高度。
+利用CSS position: sticky、视差背景和元素淡入/滑入动画来创造叙事节奏。
+设计规范：
+视觉：采用深色背景（#0f172a）以突出内容和动画效果。
+字体：大标题使用具有张力的无衬线字体Poppins，正文使用易读的Inter。
+动画：使用纯CSS实现平滑的过渡动画（@keyframes, transition）。动画触发点与滚动位置关联。
+色彩：使用{主题色}作为高光和重点元素的颜色，在暗色背景中形成焦点。
+内容与代码：将“{内容}”重新组织成一个有起承转合的故事线，分配到不同的滚动章节。必须通过CDN引入Tailwind CSS和Font Awesome。页面宽度固定为1200px，高度可滚动，但每个章节的初始视口高度为900px。`
+            },
+            {
+                id: 'ppt',
+                cn: '幻灯片布局',
+                en: 'PPT Layout',
+                file: 'PPTLayout.html',
+                prompt: `你是一位商务演示专家。请将“{内容}”转化为一个模仿PPT演示稿的HTML页面。
+核心要求：页面以全屏“幻灯片”的形式展示，内容被清晰地分割成多个部分，每个部分像一张独立的PPT幻灯片。
+布局与结构：
+使用一个横向的、宽度为多个100vw的容器包裹所有“幻灯片”。
+每张幻灯片占据一个完整的视口（100vw * 100vh），内部使用Grid或Flexbox进行内容排版。
+实现通过左右箭头按钮或鼠标横向滚动进行幻灯片切换。
+设计规范：
+风格：专业、简洁的商务风格。背景以纯色（白色或浅渐变）为主。
+字体：标题使用Montserrat，正文使用Open Sans。每页文字不宜过多，重点突出。
+图示：大量使用Font Awesome图标和简单的CSS图形（如圆形、线条）来视觉化要点。
+色彩：使用专业的配色方案，例如主色{主题色}，辅以中性色。
+内容与代码：将“{内容}”提炼成3-6个核心要点，并为每个要点创建一张幻灯片。每张幻灯片应有明确的标题和图标。通过CDN引入Tailwind CSS和Swiper.js库来实现滑动效果。整体比例设置为16:9。`
+            },
+            {
+                id: 'parallax',
+                cn: '视差滚动布局',
+                en: 'Parallax Scrolling',
+                file: 'ParallaxLayout.html',
+                prompt: `你是一位动态视觉艺术家。请为“{内容}”设计一个具有多层视差滚动效果的HTML页面。
+核心要求：当用户滚动页面时，背景层、内容层以不同的速度移动，创造出深度的立体感和沉浸式的浏览体验。
+布局与结构：
+设置至少3个视觉层：远处的背景层（移动最慢）、中间的内容层（移动速度中等）、前景的装饰层（移动最快）。
+内容被分成几个大的区块，每个区块触发一段视差动画。
+设计规范：
+视觉：使用高质量的抽象渐变背景图或CSS渐变营造深度。
+字体：选择具有现代感的无衬线字体，如Inter或Manrope，字号可以较大以增强冲击力。
+动画：使用CSS transform: translateY()配合scroll事件监听（或使用纯CSS的@media (prefers-reduced-motion)方案）实现视差。
+色彩：使用富有科技感的配色，{主题色}可作为贯穿始终的线索色。
+内容与代码：将“{内容}”分段，并分配至不同的视差滚动区块中。必须通过CDN引入Tailwind CSS。页面设计为单页长滚动形式，总高度建议为3000-5000px，以确保足够的滚动空间来体现视差效果。`
+            },
+            {
+                id: 'zed',
+                cn: '极简技术风',
+                en: 'Zed Editor Style',
+                file: 'ZedStyle.html',
+                prompt: `你是一位推崇极简与功能性的开发工具设计师。请为“{内容}”生成一个类似Zed编辑器UI的极简技术风HTML信息卡。
+核心要求：设计必须突出专业、高效和高可读性，专注于内容本身，所有UI元素都应为内容服务，毫无冗余。
+设计规范：
+美学：浅色主题，背景为纯净的白色（#ffffff）或极浅的灰色（#f8f9fa）。文字为深灰色（#1f2937），对比度高。
+布局：大量使用留白，元素严格对齐于一个隐形网格。页面规整，呼吸感极强。
+字体：标题使用优雅的衬线字体Merriweather（字重700）。正文和UI使用清晰的无衬线字体Inter（字重400）。代码片段使用等宽字体IBM Plex Mono。
+色彩：主色为黑、白、灰。强调色仅使用一种明亮的蓝色（如#3b82f6），用于链接、图标或最需要突出的标签。
+UI元素：按钮和卡片仅有细边框（1px solid #e5e7eb）和极小圆角（0.375rem）。图标仅使用Font Awesome的细线风格。
+内容与代码：完整呈现“{内容}”，不进行省略。使用Tailwind CSS，页面尺寸严格限定为900x1200像素，内容必须在此固定框内完美适配，无滚动条。`
+            },
+            {
+                id: 'glazed',
+                cn: '琉光手稿风格',
+                en: 'Glazed Manuscript',
+                file: 'GlazedManuscript.html',
+                prompt: `你是一位数字艺术家，擅长融合复古印刷与未来材质。请为“{内容}”创作一份“琉光手稿”风格的HTML页面。
+核心哲学：融合印刷品的饱和秩序感与高级玻璃拟态的未来感，打造如水晶般通透的数字艺术品。
+核心要求：整个页面作为一块大的毛玻璃，各内容区块是漂浮其上的玻璃面板，具有背景模糊、光泽边缘和微妙的辉光。
+设计规范：
+玻璃效果：主要卡片样式必须包含：backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);。
+字体：严格执行“结构性反差”。中文大标题用Noto Serif SC（字重900），英文小字用Poppins（字重300）。
+色彩系统：选择一个清新高级的主题色（如青绿色#06b6d4），将其转化为从半透明到透明的“辉光渐变”，微妙地应用于玻璃卡片背景。
+视觉流：可在整个页面背景中加入一道非常抽象、柔和、颜色极浅的曲线或光晕，引导视觉流向。
+内容与代码：对“{内容}”进行智能排版。页面采用严格的四段式结构（页头、4+8主内容区、中段分隔区、深色页脚）。通过CDN引入Tailwind CSS、Google Fonts和Font Awesome。页面尺寸为1200x1600像素。`
+            }
+        ];
+
+        const styles = [
+            {
+                id: 'freehand',
+                cn: '手绘/涂鸦风格',
+                en: 'Freehand Style',
+                file: 'FreehandStyle.html',
+                prompt: `你是一位富有童趣和创意的插画师，擅长用随性的笔触传达思想。请为{内容}生成一张手绘涂鸦风格的知识卡片HTML。
+核心要求：模仿真实手绘笔记的“不完美”感，布局自由活泼，充满即兴创作的活力。
+布局与结构：
+采用非对称的拼贴式布局，元素像便利贴一样看似随意地排列，但整体保持视觉平衡。
+核心标题可以用夸张的“手绘感”字体置于左上角或中央。
+要点之间用手绘箭头、波浪线或圆圈连接，体现思维过程。
+设计DNA：
+色彩：背景为略带纹理的米白色 (#fef9e7)。主文字用深棕色 (#5c4033)。使用一组活泼的{主题色}及邻近色，用于涂鸦和高亮，模仿马克笔效果。
+字体：使用Google Fonts中的手写字体，如Caveat或Gochi Hand。不同重要程度的文字可用不同字重和大小模拟随手书写的变化。
+元素：所有图标、分隔线、图表均需为简笔画风格。在角落添加一些看似无关的涂鸦小元素（如星星、云朵、灯泡）来增加趣味性。
+技术规格：
+使用CSS border 创造粗糙的描边效果 (border: 3px solid #5c4033; border-radius: 20px 0 20px 0;)。
+为元素添加轻微的CSS transform: rotate()，制造手贴的错落感。
+页面比例设为16:9 (例如 1200x675px)。
+内容处理：提炼{内容}的关键词和短句，用碎片化、口语化的方式呈现，模仿笔记速记。`
+            },
+            {
+                id: 'datalens',
+                cn: '信息图表风格',
+                en: 'Data Lens Style',
+                file: 'DataLens.html',
+                prompt: `你是一位数据可视化专家，致力于让复杂信息一目了然。请将{内容}转化为一张信息图表风格的HTML卡片。
+核心要求：数据优先，视觉化驱动。尽可能将抽象概念和数据转化为图表、图形和图示。
+布局与结构：
+采用模块化仪表板布局。将页面划分为几个功能明确的区域。
+典型结构：顶部为大标题和核心KPI数字卡片；中部左侧为关系图或流程图；中部右侧为条形图/饼图；底部为要点列表。
+使用清晰的标签和引导线说明图表。
+设计DNA：
+色彩：使用专业的数据可视化色板（如Tableau或Carto色板）。指定{主题色}为主色调，并为其搭配3-4个在色轮上协调的辅助色，分别代表不同数据类别。
+字体：使用高度清晰的无衬线字体，如Roboto或Open Sans。图表标签字体需小于正文。
+图表：使用纯CSS或SVG（通过<svg>标签内联）绘制简单的条形图、饼图、折线图。流程图可用Flexbox配合连接线实现。
+技术规格：
+强烈推荐使用Tailwind CSS进行快速网格布局。
+可考虑内联轻量级图表库（如Chart.js）的代码，但需注明。
+页面信息密度高，尺寸建议为1200x1600px。
+内容处理：从{内容}中主动挖掘和提取所有数据、比例、步骤、层级关系，并优先为其设计可视化方案。`
+            },
+            {
+                id: 'parchment',
+                cn: '复古/牛皮纸风格',
+                en: 'Vintage Parchment',
+                file: 'VintageParchment.html',
+                prompt: `你是一位古旧档案馆的管理员，擅长制作富有年代感的文档。请为{内容}生成一张复古牛皮纸风格的HTML卡片。
+核心要求：营造怀旧、质朴、手作的质感，让人联想到旧书页或羊皮纸地图。
+布局与结构：
+模仿旧式书信或印刷品的布局。标题可有下划线或装饰性首字母。
+内容采用两端对齐，段落首行缩进。
+可设置一个复古的“边框”或“火漆印章”样式的角落装饰。
+设计DNA：
+背景：使用CSS渐变和噪点纹理创建旧纸张效果 (background-color: #f5e9d4; background-image: url("data:image/svg+xml,...") 可模拟纸质纹理)。
+色彩：主色调为棕色系，如纸张色 (#f5e9d4)、墨水色 (#3d2b1f)、褪色红 (#8b4513)。
+字体：必须使用衬线字体，中文如Noto Serif SC，英文如Cinzel或Playfair Display，模仿铅字印刷感。
+元素：添加仿墨迹晕染的斑点、模拟胶带粘贴效果的便签、或邮票样式的小图标作为装饰。
+技术规格：
+使用CSS filter: sepia() 为部分元素添加复古滤镜。
+引入Font Awesome中的古典图标（如羽毛笔、望远镜、地球仪）。
+页面比例可设为4:3 (例如 1000x750px)。
+内容处理：如果{内容}适合，可尝试用更书面化、略带古风的语言重新组织，增强代入感。`
+            },
+            {
+                id: 'highlight',
+                cn: '高亮标记风格',
+                en: 'Study Highlights',
+                file: 'StudyHighlights.html',
+                prompt: `你是一位勤奋的学者，正在一份重要文献上做研读笔记。请为{内容}生成一张高亮标记风格的HTML卡片。
+核心要求：精准还原在白色文档上进行荧光笔标记、手写批注的真实学习场景。
+布局与结构：
+布局模仿A4打印纸。白底，从上到下的线性阅读流。
+内容以清晰的段落呈现，行距和字距适中，便于阅读和标记。
+在段落旁边预留出批注区（侧边栏）。
+设计DNA：
+基础：纯白背景 (#fff)，深黑文字 (#222)。
+高亮：使用CSS linear-gradient 或 background 属性，为关键句添加半透明荧光色。{主题色}应作为主荧光色（如 rgba(255, 255, 0, 0.3) 模仿黄色荧光笔）。
+批注：在侧边栏或行间，用手写字体（如Caveat）添加模拟手写的注释、问题和箭头。注释框背景为浅灰 (#f9f9f9)。
+装饰：添加下划线、波浪线、方框等CSS效果来模拟不同标记习惯。
+技术规格：
+使用CSS伪元素 ::before、::after 来创建行间的批注引注符号（如数字上标）。
+页面尺寸模拟竖版A4：8.5 x 11英寸 比例 (例如 850x1100px)。
+内容处理：深入分析{内容}，区分出核心论点、关键证据、重要数据和存疑之处，并为其分别匹配高亮、下划线、侧批等不同标记形式。`
+            },
+            {
+                id: 'darktech',
+                cn: '深色模式风格',
+                en: 'Dark Tech Style',
+                file: 'DarkTech.html',
+                prompt: `你是一位专注于夜间工作的极客开发者。请为{内容}生成一张深色模式风格的HTML卡片。
+核心要求：在低光环境下提供极致舒适、不刺眼的阅读体验，同时保持酷炫的科技感。
+布局与结构：
+布局清晰、紧凑，避免在深色背景上过度分散的元素。
+可使用发光的边框或细微的霓虹效果来勾勒内容区域，定义层级。
+信息层级通过间距和字体权重区分，而非过多依赖背景色块。
+设计DNA：
+背景：使用深色渐变背景，如从 #0f172a 到 #1e293b。
+文字：主要文字使用浅灰色 (#e2e8f0)，次要文字使用中灰色 (#94a3b8)，确保WCAG AA级对比度。
+强调色：{主题色}作为发光色使用。例如，用于链接、图标、关键数据，并搭配 text-shadow 或微妙的 box-shadow 实现发光效果。
+代码块：如果内容涉及代码，使用等宽字体，并搭配如dracula或night owl的深色代码高亮主题。
+技术规格：
+使用Tailwind CSS的深色模式类或自定义CSS变量。
+所有交互元素（按钮、链接）需要有清晰的:hover状态，通常表现为亮度提升或发光增强。
+页面尺寸建议为900x1350px。
+内容处理：如果{内容}涉及技术术语或代码，优先保持其格式的纯净与可读性。`
+            },
+            {
+                id: 'modular',
+                cn: '网格/模块化风格',
+                en: 'Modular Grid',
+                file: 'ModularGrid.html',
+                prompt: `你是一位瑞士平面设计学派的大师，笃信网格系统的力量。请为{内容}生成一张网格模块化风格的HTML卡片。
+核心要求：通过严格的网格系统，实现高度的秩序感、理性美和功能性。每个模块都像精密仪器中的一个零件。
+布局与结构：
+定义一个基础的12列网格系统。所有元素必须严格对齐于网格线。
+内容被分割成多个矩形模块，每个模块承载一个独立子主题或数据点。
+模块之间留有固定的“水槽”（间距），宽度一致。
+设计DNA：
+色彩：主色调为中性色（白、浅灰）。使用一套单色调色板，即{主题色}及其不同明度/饱和度的变种，用于区分不同模块或模块状态。
+字体：使用几何无衬线字体，如Montserrat或Futura，其字母本身具有建筑感。
+模块：模块背景为纯色，有极细的边框或极微妙的阴影。圆角为0或极小（如0.25rem），保持矩形感。
+技术规格：
+必须使用CSS Grid或Tailwind CSS的Grid类来实现布局。
+模块高度可以统一，也可以根据内容“等高”或“自适应”，但宽度必须符合网格列数。
+页面尺寸建议为1200x1400px。
+内容处理：将{内容}拆解成多个平行或递进的逻辑单元，每个单元准备放入一个网格模块。`
+            },
+            {
+                id: 'watercolor',
+                cn: '柔和水彩风格',
+                en: 'Watercolor Wash',
+                file: 'Watercolor.html',
+                prompt: `你是一位温柔的水彩画家，擅长用色彩营造情绪。请为{内容}生成一张柔和水彩风格的HTML卡片。
+核心要求：模仿水彩颜料在纸上晕染、扩散、交融的柔和效果，营造轻松、梦幻、富有艺术感的氛围。
+布局与结构：
+布局应放松、流动，避免僵硬的直线和直角。模块可以用不规则的色块表示。
+文字可以覆盖在水彩色块之上，或置于留白的区域。
+整体构图像一幅抽象的水彩画。
+设计DNA：
+背景：使用多个半透明的CSS linear-gradient 或 radial-gradient 层叠，模拟水彩晕染。{主题色}及其互补的柔和色应作为渐变主色。
+字体：使用优雅的手写体或衬线字体，中文如ZCOOL QingKe HuangYou，英文如Dancing Script或Cormorant Garamond。
+元素：图标和装饰线条也应具有笔触感和不完整性，可用SVG路径实现。可添加一些模仿水彩滴落或飞溅的细小元素。
+技术规格：
+使用CSS mix-blend-mode 属性（如 multiply）让文字和色块更好地融合。
+避免使用边框，用阴影或渐变来区分层次。
+页面比例建议为3:4 (例如 900x1200px)，更具画幅感。
+内容处理：对{内容}进行诗意化的提炼，用更意象、更感性的语言表达，与水彩的意境相配。`
+            },
+            {
+                id: 'illustrative',
+                cn: '插画风格',
+                en: 'Illustrative Guide',
+                file: 'IllustrativeGuide.html',
+                prompt: `你是一位叙事性插画师，相信一幅好图胜过千言万语。请为{内容}生成一张插画风格的知识卡片HTML。
+核心要求：以一幅完整的、高质量的中心插画为主导，文字作为画龙点睛的辅助说明。信息传递主要通过视觉完成。
+布局与结构：
+中心构图法：一张占据画面至少60%面积的大插画位于视觉中心。
+文字以标签、图注、对话框的形式，直接指向插画中的相应部分。
+整体如同一张科学图解或儿童绘本页。
+设计DNA：
+插画：描述你希望插画的具体风格，例如：“等距扁平矢量插画”、“细腻的铅笔素描”、“卡通角色场景”。{主题色}应作为插画的主色调。
+文字：字体应清晰易读且符合插画风格（如圆润的卡通体、严谨的印刷体）。文字颜色与插画背景有足够对比。
+互动：可以为插画的不同部分添加CSS :hover 效果，显示更详细的文字说明。
+技术规格：
+插画部分必须用SVG代码内联实现（可要求AI生成简单的SVG路径），或使用一个占位的<div>并详细描述其内容。
+使用绝对定位 (absolute) 来精确放置文字标签。
+页面比例建议为1:1 (正方形，例如 1000x1000px) 或 16:9。
+内容处理：从{内容}中抽象出一个最核心、最具画面感的隐喻或场景，并围绕它来构思中心插画。`
+            },
+            {
+                id: 'immersive',
+                cn: '主题场景融合风格',
+                en: 'Immersive Scene',
+                file: 'ImmersiveScene.html',
+                prompt: `你是一位电影场景设计师，擅长将信息无缝嵌入环境。请为{内容}生成一张主题场景融合风格的HTML卡片。
+核心要求：知识卡片不再是一个“图层”，而是与一个符合主题的背景场景融为一体，创造强烈的沉浸感和叙事性。
+布局与结构：
+背景是一张符合主题的虚构场景（如“未来数据中心”、“文艺复兴书房”、“热带雨林”）。
+文字和图表被巧妙地设计成场景中的一部分：例如，数据变成悬浮的 hologram，要点列表变成书架上的书脊，时间轴变成一条蜿蜒的小路。
+采用视差滚动或分层叠加技术，增强场景深度。
+设计DNA：
+场景：用详细的CSS多重背景图、渐变和阴影构建一个虚构场景。{主题色}应体现在场景的关键光源或主题物上。
+文字融合：文字可能具有半透明、发光、雕刻在物体上等效果，以融入环境。
+图标与图表：所有UI元素都需进行“场景化”皮肤改造（如，按钮像场景中的控制板，图表像场景内的显示屏）。
+技术规格：
+大量使用CSS background-image、clip-path 和 blend-mode。
+使用CSS position 进行精细的图层控制，模拟景深。
+页面尺寸建议为宽屏比例，如 2.35:1 (例如 1410x600px) 或 16:9。
+内容处理：根据{内容}的主题，优先构思一个能承载其信息的隐喻性场景，然后将内容要点一一映射到场景中的具体物件或位置上。`
+            }
+        ];
+
+        // 合并所有提示词数据
+        const allPrompts = [...layouts, ...styles];
+
+        function createCard(item, index) {
+            // 为布局和风格添加不同的标签
+            const typeLabel = index < layouts.length ? 
+                `<span class="px-2 py-1 text-xs font-semibold text-brand-900 bg-brand-100 rounded-full">布局 Layout</span>` : 
+                `<span class="px-2 py-1 text-xs font-semibold text-purple-900 bg-purple-100 rounded-full">风格 Style</span>`;
+
+            return `
+                <div class="bg-white rounded-xl border border-ui-border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col h-full group relative">
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="font-bold text-lg text-slate-800">${item.cn}</h3>
+                                    ${typeLabel}
+                                </div>
+                                <p class="text-sm text-slate-500 font-mono">${item.en}</p>
+                            </div>
+                        </div>
+
+                        <div class="relative flex-grow bg-slate-50 rounded-lg border border-slate-200 p-4 mb-5 group-hover:border-brand-500 transition-colors">
+                            <div class="prompt-text line-clamp-3 text-sm text-slate-600 font-mono leading-relaxed" id="text-${item.id}">
+                                ${item.prompt}
+                            </div>
+                            <button onclick="togglePrompt('${item.id}')" class="text-xs font-medium text-brand-600 mt-3 hover:text-brand-500 hover:underline focus:outline-none flex items-center gap-1 transition-colors">
+                                <span id="btn-text-${item.id}">展开全部</span>
+                                <i id="icon-text-${item.id}" class="fa-solid fa-chevron-down text-[10px]"></i>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mt-auto">
+                            <button onclick="copyToClipboard(\`${item.prompt.replace(/`/g, '\\`')}\`, this)" class="flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-brand-50 hover:border-brand-500 hover:text-brand-700 transition-all group/btn active:scale-95">
+                                <i class="fa-regular fa-copy group-hover/btn:scale-110 transition-transform"></i>
+                                <span>复制提示词</span>
+                            </button>
+                            <a href="${item.file}" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-500 text-white rounded-lg text-sm font-medium hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-500/30 transition-all active:scale-95">
+                                <span>查看效果</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Function
+        function renderGrid(containerId, data) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = data.map((item, index) => createCard(item, index)).join('');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // 渲染所有卡片到一个网格中
+            renderGrid('all-prompts-grid', allPrompts);
+        });
+
+        // Toggle Expand/Collapse
+        function togglePrompt(id) {
+            const textEl = document.getElementById(`text-${id}`);
+            const btnSpanEl = document.getElementById(`btn-text-${id}`);
+            const iconEl = document.getElementById(`icon-text-${id}`);
+            
+            if (textEl.classList.contains('line-clamp-3')) {
+                textEl.classList.remove('line-clamp-3');
+                textEl.classList.add('max-h-96', 'overflow-y-auto', 'pr-2'); 
+                btnSpanEl.textContent = '收起';
+                iconEl.classList.remove('fa-chevron-down');
+                iconEl.classList.add('fa-chevron-up');
+            } else {
+                textEl.classList.add('line-clamp-3');
+                textEl.classList.remove('max-h-96', 'overflow-y-auto', 'pr-2');
+                btnSpanEl.textContent = '展开全部';
+                iconEl.classList.remove('fa-chevron-up');
+                iconEl.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Copy to Clipboard
+        function copyToClipboard(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHtml = btnElement.innerHTML;
+                
+                // Visual Feedback - 使用新的绿色主题
+                btnElement.classList.remove('bg-white', 'text-slate-700', 'border-slate-200', 'hover:bg-brand-50', 'hover:border-brand-500', 'hover:text-brand-700');
+                btnElement.classList.add('bg-brand-100', 'text-brand-700', 'border-brand-500', 'cursor-default');
+                btnElement.innerHTML = `<i class="fa-solid fa-check"></i> <span>已复制</span>`;
+                btnElement.disabled = true;
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    btnElement.innerHTML = originalHtml;
+                    btnElement.classList.add('bg-white', 'text-slate-700', 'border-slate-200', 'hover:bg-brand-50', 'hover:border-brand-500', 'hover:text-brand-700');
+                    btnElement.classList.remove('bg-brand-100', 'text-brand-700', 'border-brand-500', 'cursor-default');
+                    btnElement.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('复制失败，请手动复制');
+            });
+        }
+    </script>
+</body>
+</html>
